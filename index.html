@@ -1,0 +1,3960 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter - 旅行匯率小幫手｜即時查詢、快速轉換- currency_converter </title>
+    
+    <!-- 多語言 SEO -->
+    <meta name="description" content="Real-time currency converter with 27+ currencies. Free online exchange rate calculator.">
+    <meta name="keywords" content="currency converter, exchange rate, money converter, forex calculator">
+    
+    <!-- 多語言連結 -->
+    <link rel="alternate" hreflang="en" href="?lang=en">
+    <link rel="alternate" hreflang="zh" href="?lang=zh">
+    <link rel="alternate" hreflang="ja" href="?lang=ja">
+    <link rel="alternate" hreflang="ko" href="?lang=ko">
+    <link rel="alternate" hreflang="es" href="?lang=es">
+    <link rel="alternate" hreflang="fr" href="?lang=fr">
+    
+    <!-- Open Graph 標籤 -->
+    <meta property="og:title" content="Currency Converter - Real-time Exchange Rates">
+    <meta property="og:description" content="Free online currency converter with real-time exchange rates for 27+ currencies. Convert USD, EUR, JPY, CNY, KRW, TWD and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com">
+    <meta property="og:image" content="https://your-domain.com/currency-converter-preview.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Currency Converter - Real-time Exchange Rates">
+    <meta name="twitter:description" content="Free online currency converter with real-time exchange rates for 27+ currencies.">
+    
+    <!-- 結構化數據 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Currency Converter",
+        "description": "Real-time currency converter with 27+ currencies",
+        "url": "https://your-domain.com",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "featureList": [
+            "Real-time exchange rates",
+            "27+ currencies supported",
+            "Mobile responsive",
+            "Free to use"
+        ]
+    }
+    </script>
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* 粒子動畫背景 */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.8;
+            }
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            position: relative;
+            z-index: 1;
+        }
+
+        .api-status {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            animation: pulse 2s infinite;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+        }
+
+        .status-indicator.online {
+            background: #51cf66;
+            box-shadow: 0 0 10px rgba(81, 207, 102, 0.5);
+        }
+
+        .status-indicator.loading {
+            background: #ffd43b;
+            box-shadow: 0 0 10px rgba(255, 212, 59, 0.5);
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes pulseHighlight {
+            0% { 
+                border-color: #dc3545;
+                box-shadow: 0 20px 40px rgba(220, 53, 69, 0.4);
+            }
+            50% { 
+                border-color: #ff6b6b;
+                box-shadow: 0 25px 50px rgba(255, 107, 107, 0.6);
+            }
+            100% { 
+                border-color: #dc3545;
+                box-shadow: 0 20px 40px rgba(220, 53, 69, 0.4);
+            }
+        }
+
+        .rates-display {
+            padding: 35px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+
+        .rates-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+            max-width: 300px;
+            position: relative;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1em;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .search-input::placeholder {
+            color: #999;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            z-index: 1000;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            margin-top: 5px;
+        }
+
+        .search-result-item {
+            padding: 12px 15px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-result-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-symbol {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #667eea;
+            min-width: 40px;
+        }
+
+        .search-result-info {
+            flex: 1;
+        }
+
+        .search-result-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .search-result-code {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .no-results {
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        .refresh-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 0.95em;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .refresh-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .refresh-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .rates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .rate-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .rate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .rate-card[data-currency="TWD"] {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            color: #333;
+            border-left: 5px solid #667eea;
+            transform: scale(1);
+            padding: 30px 25px;
+            min-height: 180px;
+        }
+
+        .rate-card[data-currency="TWD"] h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .rate-card[data-currency="TWD"] .rate-value {
+            color: inherit;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .rate-card[data-currency="TWD"] .rate-label {
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .rate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .rate-card:hover::before {
+            left: 100%;
+        }
+
+        .rate-card h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .rate-value {
+            font-size: 2em;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .rate-label {
+            color: #666;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .rate-change {
+            font-size: 0.85em;
+            margin-top: 8px;
+            font-weight: 600;
+        }
+
+        .rate-change.positive {
+            color: #28a745;
+        }
+
+        .rate-change.negative {
+            color: #dc3545;
+        }
+
+        .converter-section {
+            padding: 35px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        }
+
+        .converter-title {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #333;
+            font-size: 1.8em;
+            font-weight: 600;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .converter-form {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 25px;
+            align-items: center;
+            margin-bottom: 35px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-group label {
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 600;
+            font-size: 1.05em;
+        }
+
+        .input-group input {
+            padding: 18px;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .swap-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.3em;
+            transition: all 0.3s;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .swap-btn:hover {
+            transform: scale(1.1) rotate(180deg);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .currency-select {
+            padding: 18px;
+            border: 2px solid #e1e5e9;
+            border-radius: 15px;
+            font-size: 1.1em;
+            background: rgba(255,255,255,0.9);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .currency-select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .result {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border-radius: 15px;
+            margin-top: 25px;
+            display: none;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.2);
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .result.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-value {
+            font-size: 2.2em;
+            color: #155724;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .result-label {
+            color: #155724;
+            font-size: 1.15em;
+            font-weight: 500;
+        }
+
+        .update-time {
+            text-align: center;
+            color: #666;
+            font-size: 0.95em;
+            margin-top: 25px;
+            padding: 15px;
+            background: rgba(255,255,255,0.8);
+            border-radius: 10px;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 25px 0;
+            text-align: center;
+            display: none;
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.2);
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .converter-form {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .rates-grid {
+                grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            }
+
+            .api-status {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header h1 {
+                font-size: 2.2em;
+            }
+        }
+
+        /* 浮動按鈕樣式 */
+        .floating-btn {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #floating-search-btn {
+            top: 40%;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        #floating-search-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
+            background: linear-gradient(135deg, #ff5252 0%, #d63031 100%);
+        }
+
+        .floating-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+
+        .floating-btn:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .floating-btn .icon {
+            font-size: 1.2em;
+        }
+
+        /* 響應式設計 - 在小螢幕上調整按鈕位置 */
+        @media (max-width: 768px) {
+            .floating-btn {
+                left: 10px;
+                padding: 12px 16px;
+                font-size: 0.9em;
+            }
+            
+            #floating-search-btn {
+                top: 35%;
+            }
+            
+            #floating-convert-btn {
+                top: 55%;
+            }
+        }
+
+        /* 動畫效果 */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(-50%) translateX(0);
+            }
+            50% {
+                transform: translateY(-50%) translateX(5px);
+            }
+        }
+
+        @keyframes floatSearch {
+            0%, 100% {
+                transform: translateY(-50%) translateX(0);
+            }
+            50% {
+                transform: translateY(-50%) translateX(-5px);
+            }
+        }
+
+        .floating-btn {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        #floating-search-btn {
+            animation: floatSearch 3s ease-in-out infinite;
+        }
+
+        .floating-btn:hover {
+            animation: none;
+        }
+
+        /* 廣告區域樣式 */
+        .ad-section {
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            text-align: center;
+        }
+
+        .ad-container {
+            max-width: 728px;
+            margin: 0 auto;
+            min-height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            border: 1px dashed #ccc;
+        }
+
+        .ad-container:empty::before {
+            content: '廣告區域';
+            color: #999;
+            font-style: italic;
+        }
+
+        /* 響應式廣告 */
+        @media (max-width: 768px) {
+            .ad-container {
+                max-width: 320px;
+                min-height: 50px;
+            }
+        }
+
+        /* 語言選擇器樣式 */
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .language-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #667eea;
+            border-radius: 25px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #667eea;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .language-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .language-option {
+            color: #222;
+            background: transparent;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-weight: 500;
+            border-radius: 6px;
+            transition: background 0.2s, color 0.2s;
+        }
+        body.dark-mode .language-option {
+            color: #f1f1f1;
+        }
+        .language-option.active,
+        .language-option:hover {
+            background: #667eea;
+            color: #fff;
+        }
+
+        .flag-icon {
+            font-size: 1.2em;
+        }
+
+        /* 響應式語言選擇器 */
+        @media (max-width: 768px) {
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .language-btn {
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+        }
+
+        /* RTL 語言支援 */
+        [dir="rtl"] {
+            direction: rtl;
+            text-align: right;
+        }
+
+        [dir="rtl"] .language-selector {
+            left: 20px;
+            right: auto;
+        }
+
+        [dir="rtl"] .language-dropdown {
+            left: 0;
+            right: auto;
+        }
+
+        [dir="rtl"] .swap-btn {
+            transform: scaleX(-1);
+        }
+
+        /* 國際化相關樣式 */
+        .currency-card {
+            transition: all 0.3s ease;
+        }
+
+        .currency-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        .currency-card.highlight {
+            animation: pulse 2s infinite;
+            border: 2px solid #ff4757;
+        }
+
+        /* 多語言字體優化 */
+        .header h1, .header p {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* 日文和韓文字體優化 */
+        [lang="ja"] {
+            font-family: 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+        }
+
+        [lang="ko"] {
+            font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', 'Dotum', sans-serif;
+        }
+
+        /* 中文繁體字體優化 */
+        [lang="zh"] {
+            font-family: 'PingFang TC', 'Helvetica Neue', 'Microsoft JhengHei', sans-serif;
+        }
+
+        /* 阿拉伯文和希伯來文支援 */
+        [lang="ar"], [lang="he"] {
+            font-family: 'Arial', 'Tahoma', sans-serif;
+        }
+
+        /* 響應式國際化 */
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+            
+            .header p {
+                font-size: 0.9em;
+            }
+            
+            .language-btn {
+                font-size: 0.7em;
+                padding: 4px 8px;
+            }
+        }
+
+        .local-currency-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7em;
+            font-weight: bold;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 900px) {
+            .rates-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .converter-form {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            .converter-section {
+                padding: 20px 5px;
+            }
+            .header h1, .converter-title {
+                font-size: 1.3em;
+            }
+        }
+        @media (max-width: 600px) {
+            .rates-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 0 2px;
+            }
+            .header h1, .converter-title {
+                font-size: 1.1em;
+            }
+            .converter-section, .rates-header, .rates-grid {
+                padding: 0;
+            }
+            .converter-form {
+                gap: 10px;
+            }
+            .floating-btn {
+                font-size: 0.9em;
+                padding: 8px 12px;
+            }
+        }
+
+        .quick-currency-select {
+            margin: 10px 0 20px 0;
+            text-align: center;
+        }
+        .quick-currency-select .quick-btn {
+            margin: 0 4px;
+            padding: 6px 14px;
+            border: none;
+            border-radius: 8px;
+            background: #667eea;
+            color: #fff;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .quick-currency-select .quick-btn:hover {
+            background: #5a67d8;
+        }
+
+        body.dark-mode {
+            background: linear-gradient(135deg, #232526 0%, #414345 100%) !important;
+            color: #f1f1f1;
+        }
+        body.dark-mode .container {
+            background: rgba(30,30,30,0.95);
+        }
+        body.dark-mode .rate-card {
+            background: linear-gradient(135deg, #2c3e50 0%, #4b6cb7 100%);
+            color: #f1f1f1;
+            border-left: 5px solid #8ec6ff;
+        }
+        body.dark-mode .rate-card h3,
+        body.dark-mode .rate-card .rate-label,
+        body.dark-mode .rate-card .rate-value {
+            color: #f1f1f1;
+        }
+        body.dark-mode .converter-section,
+        body.dark-mode .rates-header,
+        body.dark-mode .rates-grid {
+            background: transparent;
+        }
+        body.dark-mode .result {
+            background: linear-gradient(135deg, #2e7d32 0%, #388e3c 100%);
+            color: #fff;
+        }
+        body.dark-mode .quick-currency-select .quick-btn {
+            background: #4b6cb7;
+        }
+        body.dark-mode .quick-currency-select .quick-btn:hover {
+            background: #35518a;
+        }
+        body.dark-mode .floating-btn {
+            background: #232526;
+            color: #fff;
+        }
+        body.dark-mode .floating-btn:hover {
+            background: #414345;
+        }
+        body.dark-mode .swap-btn {
+            background: #4b6cb7;
+        }
+        body.dark-mode .swap-btn:hover {
+            background: #35518a;
+        }
+        body.dark-mode .search-input {
+            background: #232526;
+            color: #fff;
+            border-color: #4b6cb7;
+        }
+        body.dark-mode .search-btn {
+            background: #4b6cb7;
+            color: #fff;
+        }
+        body.dark-mode .search-btn:hover {
+            background: #35518a;
+        }
+        body.dark-mode .ad-section {
+            background: transparent;
+        }
+        .copy-btn {
+            background: #667eea;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 6px 18px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .copy-btn:hover {
+            background: #5a67d8;
+        }
+        body.dark-mode .copy-btn {
+            background: #4b6cb7;
+        }
+        body.dark-mode .copy-btn:hover {
+            background: #35518a;
+        }
+
+        /* 匯率通知訂閱功能樣式 */
+        .notification-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .notification-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .notification-header h3 {
+            font-size: 1.8em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .notification-header p {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .notification-content {
+            display: grid;
+            gap: 30px;
+        }
+
+        .email-subscription, .line-subscription {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .email-subscription h4, .line-subscription h4 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .subscription-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .email-input {
+            padding: 12px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .currency-selection {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .currency-selection label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .currency-checkboxes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+
+        .currency-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .currency-checkbox:hover {
+            background: rgba(102, 126, 234, 0.2);
+        }
+
+        .currency-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #667eea;
+        }
+
+        .notification-time {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .notification-time label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .time-select {
+            padding: 10px 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1em;
+            background: white;
+        }
+
+        .subscribe-btn, .unsubscribe-btn, .line-notify-btn, .upgrade-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .subscribe-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .subscribe-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .unsubscribe-btn {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .unsubscribe-btn:hover {
+            background: #ff5252;
+        }
+
+        .line-notify-btn {
+            background: #00c300;
+            color: white;
+            width: 100%;
+        }
+
+        .line-notify-btn:hover {
+            background: #00a000;
+        }
+
+        .upgrade-btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            color: white;
+            margin-top: 15px;
+        }
+
+        .upgrade-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .plan-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .plan-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .free-plan {
+            border-color: #667eea;
+        }
+
+        .premium-plan {
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(238, 90, 36, 0.1) 100%);
+        }
+
+        .plan-card h5 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .plan-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px 0;
+        }
+
+        .plan-card li {
+            padding: 8px 0;
+            color: #666;
+            border-bottom: 1px solid #eee;
+        }
+
+        .plan-card li:last-child {
+            border-bottom: none;
+        }
+
+        .subscription-status {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .subscription-status.success {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid #4caf50;
+            color: #2e7d32;
+        }
+
+        .subscription-status.error {
+            background: rgba(244, 67, 54, 0.1);
+            border: 1px solid #f44336;
+            color: #c62828;
+        }
+
+        /* 深色模式樣式 */
+        body.dark-mode .notification-section {
+            background: rgba(30, 30, 30, 0.95);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .email-subscription,
+        body.dark-mode .line-subscription {
+            background: rgba(40, 40, 40, 0.8);
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .email-input,
+        body.dark-mode .time-select {
+            background: #2a2a2a;
+            border-color: #444;
+            color: #fff;
+        }
+
+        body.dark-mode .currency-checkbox {
+            background: rgba(102, 126, 234, 0.2);
+            color: #fff;
+        }
+
+        body.dark-mode .plan-card {
+            background: rgba(40, 40, 40, 0.9);
+            color: #fff;
+        }
+
+        body.dark-mode .plan-card li {
+            color: #ccc;
+            border-bottom-color: #444;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .notification-section {
+                padding: 20px;
+                margin: 20px 0;
+            }
+
+            .currency-checkboxes {
+                grid-template-columns: 1fr;
+            }
+
+            .plan-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .subscription-form {
+                gap: 15px;
+            }
+        }
+
+        /* 新增小型浮空按鈕樣式 */
+        .small-btn {
+            padding: 7px 14px !important;
+            font-size: 0.95em !important;
+            border-radius: 9px !important;
+        }
+    </style>
+
+    <button id="dark-mode-toggle" style="position:fixed;top:18px;right:18px;z-index:1000;padding:8px 18px;border-radius:8px;border:none;cursor:pointer;font-size:1em;box-shadow:0 2px 8px rgba(0,0,0,0.08);background:#232526;color:#fff;">🌙 深色模式</button>
+
+    <script>
+    // 深色模式切換
+    function setDarkMode(on) {
+        if (on) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', '1');
+            document.getElementById('dark-mode-toggle').textContent = '☀️ 淺色模式';
+        } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', '0');
+            document.getElementById('dark-mode-toggle').textContent = '🌙 深色模式';
+        }
+    }
+    document.getElementById('dark-mode-toggle').onclick = function() {
+        setDarkMode(!document.body.classList.contains('dark-mode'));
+    };
+    // 頁面載入時自動套用
+    if (localStorage.getItem('darkMode') === '1') {
+        setDarkMode(true);
+    }
+    </script>
+
+    <!-- 移除舊語言選擇器區塊及相關CSS/JS -->
+    <!-- 新語言選擇器（右上角） -->
+    <div style="position:fixed;top:18px;right:18px;z-index:1001;">
+        <select id="lang-select" style="padding:8px 18px;border-radius:8px;font-size:1em;">
+            <option value="zh">繁體中文</option>
+            <option value="en">English</option>
+            <option value="ja">日本語</option>
+            <option value="ko">한국어</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+        </select>
+    </div>
+
+    <script>
+    // 新增<select>切換事件
+    document.getElementById('lang-select').addEventListener('change', function() {
+        changeLanguage(this.value);
+    });
+    // 頁面載入時自動套用localStorage語言
+    document.addEventListener('DOMContentLoaded', function() {
+        let browserLang = navigator.language || navigator.userLanguage || 'en';
+        let lang = localStorage.getItem('lang') || (browserLang.startsWith('zh') ? 'zh' : 'en');
+        document.getElementById('lang-select').value = lang;
+        changeLanguage(lang);
+    });
+    // 在changeLanguage裡記錄語言
+    const origChangeLanguage = changeLanguage;
+    changeLanguage = function(lang) {
+        localStorage.setItem('lang', lang);
+        origChangeLanguage(lang);
+        document.getElementById('lang-select').value = lang;
+    }
+    </script>
+</head>
+<body>
+    <!-- 粒子動畫背景 -->
+    <div class="particles" id="particles"></div>
+
+    <!-- 浮動按鈕 -->
+    <button class="floating-btn" id="floating-search-btn" onclick="scrollToSearch()">
+        <span class="icon">🔍</span>
+        <span id="floating-search-text">搜尋國家</span>
+    </button>
+    
+    <button class="floating-btn" id="floating-convert-btn" onclick="scrollToConverter()">
+        <span class="icon">💱</span>
+        <span id="floating-btn-text">貨幣轉換</span>
+    </button>
+
+    <div class="container">
+        <!-- 語言選擇器 -->
+        <div class="language-selector">
+            <div class="language-btn" onclick="toggleLanguageDropdown()">
+                <span class="flag-icon" id="current-flag">🌍</span>
+                <span id="current-language">English</span>
+            </div>
+        </div>
+
+        <div class="converter-section">
+            <h2 class="converter-title">💱 匯率轉換器</h2>
+            
+            <div class="converter-form">
+                <div class="input-group">
+                    <label for="amount1">金額</label>
+                    <input type="number" id="amount1" placeholder="輸入金額" step="0.01" min="0">
+                </div>
+                
+                <div style="display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 1.8em; color: #667eea;">→</span>
+                </div>
+                
+                <div class="input-group">
+                    <label for="amount2">轉換結果</label>
+                    <input type="number" id="amount2" placeholder="轉換結果" readonly>
+                </div>
+            </div>
+
+            <div class="converter-form">
+                <div class="input-group">
+                    <label for="currency1">從</label>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <select id="currency1" onchange="convert(); updateFlag('currency1', 'flag1')"></select>
+                        <span id="flag1" style="font-size:1.3em;"></span>
+                    </div>
+                </div>
+                
+                <button class="swap-btn" onclick="swapCurrencies()">⇄</button>
+                
+                <div class="input-group">
+                    <label for="currency2">到</label>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <select id="currency2" onchange="convert(); updateFlag('currency2', 'flag2')"></select>
+                        <span id="flag2" style="font-size:1.3em;"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result" id="result">
+                <div class="result-value" id="result-value">0.00</div>
+                <div class="result-label" id="result-label">轉換結果</div>
+                <button id="copy-result-btn" class="copy-btn" style="margin-top:10px;display:none;">📋 複製結果</button>
+            </div>
+
+            <div class="quick-currency-select">
+                <span>常用貨幣：</span>
+                <button class="quick-btn" onclick="setQuickCurrency('USD')">美元</button>
+                <button class="quick-btn" onclick="setQuickCurrency('TWD')">台幣</button>
+                <button class="quick-btn" onclick="setQuickCurrency('JPY')">日圓</button>
+                <button class="quick-btn" onclick="setQuickCurrency('KRW')">韓元</button>
+                <button class="quick-btn" onclick="setQuickCurrency('EUR')">歐元</button>
+            </div>
+        </div>
+
+        <div class="header">
+            <h1>🌍 貨幣轉換平台</h1>
+            <p>即時匯率查詢與轉換計算</p>
+            
+            <div class="api-status">
+                <div class="status-item">
+                    <div class="status-indicator" id="api-status"></div>
+                    <span id="api-status-text">連接最新匯率中...</span>
+                </div>
+                <div class="status-item">
+                    <span>最後更新: </span>
+                    <span id="last-update">載入中...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="rates-display">
+            <div class="rates-header">
+                <h2>📊 即時匯率</h2>
+                <div class="search-container">
+                    <input type="text" class="search-input" id="currency-search" placeholder="搜尋貨幣或國家名稱..." autocomplete="off">
+                    <button class="search-btn" onclick="searchCurrency()">
+                        🔍
+                    </button>
+                    <div class="search-results" id="search-results"></div>
+                </div>
+                <button class="refresh-btn" id="refresh-btn" onclick="fetchLatestRates()">
+                    <span id="refresh-icon">🔄</span>
+                    <span id="refresh-text">更新匯率</span>
+                </button>
+            </div>
+            
+            <div class="error-message" id="error-message"></div>
+
+            <div class="rates-grid">
+                <div class="rate-card" data-currency="USD">
+                    <h3>🇺🇸 美元 (USD)</h3>
+                    <div class="rate-value" id="usd-rate">載入中...</div>
+                    <div class="rate-label" id="usd-label">1 USD = 載入中... TWD</div>
+                    <div class="rate-change" id="usd-change"></div>
+                </div>
+                <div class="rate-card" data-currency="TWD">
+                    <h3>🇹🇼 台幣 (TWD)</h3>
+                    <div class="rate-value" id="twd-rate">1.0000</div>
+                    <div class="rate-label" id="twd-label">1 TWD = 1.0000 TWD</div>
+                    <div class="rate-change" id="twd-change"></div>
+                </div>
+                <div class="rate-card" data-currency="EUR">
+                    <h3>🇪🇺 歐元 (EUR)</h3>
+                    <div class="rate-value" id="eur-rate">載入中...</div>
+                    <div class="rate-label" id="eur-label">1 EUR = 載入中... TWD</div>
+                    <div class="rate-change" id="eur-change"></div>
+                </div>
+                <div class="rate-card" data-currency="GBP">
+                    <h3>🇬🇧 英鎊 (GBP)</h3>
+                    <div class="rate-value" id="gbp-rate">載入中...</div>
+                    <div class="rate-label" id="gbp-label">1 GBP = 載入中... TWD</div>
+                    <div class="rate-change" id="gbp-change"></div>
+                </div>
+                <div class="rate-card" data-currency="JPY">
+                    <h3>🇯🇵 日圓 (JPY)</h3>
+                    <div class="rate-value" id="jpy-rate">載入中...</div>
+                    <div class="rate-label" id="jpy-label">1 JPY = 載入中... TWD</div>
+                    <div class="rate-change" id="jpy-change"></div>
+                </div>
+                <div class="rate-card" data-currency="CNY">
+                    <h3>🇨🇳 人民幣 (CNY)</h3>
+                    <div class="rate-value" id="cny-rate">載入中...</div>
+                    <div class="rate-label" id="cny-label">1 CNY = 載入中... TWD</div>
+                    <div class="rate-change" id="cny-change"></div>
+                </div>
+                <div class="rate-card" data-currency="KRW">
+                    <h3>🇰🇷 韓元 (KRW)</h3>
+                    <div class="rate-value" id="krw-rate">載入中...</div>
+                    <div class="rate-label" id="krw-label">1 KRW = 載入中... TWD</div>
+                    <div class="rate-change" id="krw-change"></div>
+                </div>
+                <div class="rate-card" data-currency="CAD">
+                    <h3>🇨🇦 加拿大元 (CAD)</h3>
+                    <div class="rate-value" id="cad-rate">載入中...</div>
+                    <div class="rate-label" id="cad-label">1 CAD = 載入中... TWD</div>
+                    <div class="rate-change" id="cad-change"></div>
+                </div>
+                <div class="rate-card" data-currency="AUD">
+                    <h3>🇦🇺 澳洲元 (AUD)</h3>
+                    <div class="rate-value" id="aud-rate">載入中...</div>
+                    <div class="rate-label" id="aud-label">1 AUD = 載入中... TWD</div>
+                    <div class="rate-change" id="aud-change"></div>
+                </div>
+                <div class="rate-card" data-currency="CHF">
+                    <h3>🇨🇭 瑞士法郎 (CHF)</h3>
+                    <div class="rate-value" id="chf-rate">載入中...</div>
+                    <div class="rate-label" id="chf-label">1 CHF = 載入中... TWD</div>
+                    <div class="rate-change" id="chf-change"></div>
+                </div>
+                <div class="rate-card" data-currency="SGD">
+                    <h3>🇸🇬 新加坡元 (SGD)</h3>
+                    <div class="rate-value" id="sgd-rate">載入中...</div>
+                    <div class="rate-label" id="sgd-label">1 SGD = 載入中... TWD</div>
+                    <div class="rate-change" id="sgd-change"></div>
+                </div>
+                <div class="rate-card" data-currency="HKD">
+                    <h3>🇭🇰 港幣 (HKD)</h3>
+                    <div class="rate-value" id="hkd-rate">載入中...</div>
+                    <div class="rate-label" id="hkd-label">1 HKD = 載入中... TWD</div>
+                    <div class="rate-change" id="hkd-change"></div>
+                </div>
+                <div class="rate-card" data-currency="THB">
+                    <h3>🇹🇭 泰銖 (THB)</h3>
+                    <div class="rate-value" id="thb-rate">載入中...</div>
+                    <div class="rate-label" id="thb-label">1 THB = 載入中... TWD</div>
+                    <div class="rate-change" id="thb-change"></div>
+                </div>
+                <div class="rate-card" data-currency="MYR">
+                    <h3>🇲🇾 馬來西亞令吉 (MYR)</h3>
+                    <div class="rate-value" id="myr-rate">載入中...</div>
+                    <div class="rate-label" id="myr-label">1 MYR = 載入中... TWD</div>
+                    <div class="rate-change" id="myr-change"></div>
+                </div>
+                <div class="rate-card" data-currency="PHP">
+                    <h3>🇵🇭 菲律賓披索 (PHP)</h3>
+                    <div class="rate-value" id="php-rate">載入中...</div>
+                    <div class="rate-label" id="php-label">1 PHP = 載入中... TWD</div>
+                    <div class="rate-change" id="php-change"></div>
+                </div>
+                <div class="rate-card" data-currency="VND">
+                    <h3>🇻🇳 越南盾 (VND)</h3>
+                    <div class="rate-value" id="vnd-rate">載入中...</div>
+                    <div class="rate-label" id="vnd-label">1 VND = 載入中... TWD</div>
+                    <div class="rate-change" id="vnd-change"></div>
+                </div>
+                <div class="rate-card" data-currency="IDR">
+                    <h3>🇮🇩 印尼盾 (IDR)</h3>
+                    <div class="rate-value" id="idr-rate">載入中...</div>
+                    <div class="rate-label" id="idr-label">1 IDR = 載入中... TWD</div>
+                    <div class="rate-change" id="idr-change"></div>
+                </div>
+                <div class="rate-card" data-currency="RUB">
+                    <h3>🇷🇺 俄羅斯盧布 (RUB)</h3>
+                    <div class="rate-value" id="rub-rate">載入中...</div>
+                    <div class="rate-label" id="rub-label">1 RUB = 載入中... TWD</div>
+                    <div class="rate-change" id="rub-change"></div>
+                </div>
+                <div class="rate-card" data-currency="ZAR">
+                    <h3>🇿🇦 南非蘭特 (ZAR)</h3>
+                    <div class="rate-value" id="zar-rate">載入中...</div>
+                    <div class="rate-label" id="zar-label">1 ZAR = 載入中... TWD</div>
+                    <div class="rate-change" id="zar-change"></div>
+                </div>
+                <div class="rate-card" data-currency="MXN">
+                    <h3>🇲🇽 墨西哥披索 (MXN)</h3>
+                    <div class="rate-value" id="mxn-rate">載入中...</div>
+                    <div class="rate-label" id="mxn-label">1 MXN = 載入中... TWD</div>
+                    <div class="rate-change" id="mxn-change"></div>
+                </div>
+                <div class="rate-card" data-currency="CLP">
+                    <h3>🇨🇱 智利披索 (CLP)</h3>
+                    <div class="rate-value" id="clp-rate">載入中...</div>
+                    <div class="rate-label" id="clp-label">1 CLP = 載入中... TWD</div>
+                    <div class="rate-change" id="clp-change"></div>
+                </div>
+                <div class="rate-card" data-currency="COP">
+                    <h3>🇨🇴 哥倫比亞披索 (COP)</h3>
+                    <div class="rate-value" id="cop-rate">載入中...</div>
+                    <div class="rate-label" id="cop-label">1 COP = 載入中... TWD</div>
+                    <div class="rate-change" id="cop-change"></div>
+                </div>
+                <div class="rate-card" data-currency="PEN">
+                    <h3>🇵🇪 秘魯索爾 (PEN)</h3>
+                    <div class="rate-value" id="pen-rate">載入中...</div>
+                    <div class="rate-label" id="pen-label">1 PEN = 載入中... TWD</div>
+                    <div class="rate-change" id="pen-change"></div>
+                </div>
+                <div class="rate-card" data-currency="ARS">
+                    <h3>🇦🇷 阿根廷披索 (ARS)</h3>
+                    <div class="rate-value" id="ars-rate">載入中...</div>
+                    <div class="rate-label" id="ars-label">1 ARS = 載入中... TWD</div>
+                    <div class="rate-change" id="ars-change"></div>
+                </div>
+                <div class="rate-card" data-currency="TRY">
+                    <h3>🇹🇷 土耳其里拉 (TRY)</h3>
+                    <div class="rate-value" id="try-rate">載入中...</div>
+                    <div class="rate-label" id="try-label">1 TRY = 載入中... TWD</div>
+                    <div class="rate-change" id="try-change"></div>
+                </div>
+                <div class="rate-card" data-currency="BRL">
+                    <h3>🇧🇷 巴西雷亞爾 (BRL)</h3>
+                    <div class="rate-value" id="brl-rate">載入中...</div>
+                    <div class="rate-label" id="brl-label">1 BRL = 載入中... TWD</div>
+                    <div class="rate-change" id="brl-change"></div>
+                </div>
+                <div class="rate-card" data-currency="INR">
+                    <h3>🇮🇳 印度盧比 (INR)</h3>
+                    <div class="rate-value" id="inr-rate">載入中...</div>
+                    <div class="rate-label" id="inr-label">1 INR = 載入中... TWD</div>
+                    <div class="rate-change" id="inr-change"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 廣告區域 -->
+        <div class="ad-section">
+            <div class="ad-container">
+                <ins class="adsbygoogle"
+                     style="display:block"
+                     data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                     data-ad-slot="XXXXXXXXXX"
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+        </div>
+
+        <div class="update-time">
+            頁面更新時間: <span id="update-time"></span>
+        </div>
+
+        <!-- 匯率通知訂閱功能 -->
+        <div class="notification-section">
+            <div class="notification-header">
+                <h3 id="notification-title">📧 每日匯率通知</h3>
+                <p id="notification-desc">獲取您選擇貨幣的每日通知</p>
+            </div>
+
+            <div class="notification-content">
+                <!-- Email 訂閱表單 -->
+                <div class="email-subscription">
+                    <h4>📧 Email 訂閱</h4>
+                    <div class="subscription-form">
+                        <input type="email" id="email-input" placeholder="輸入您的電子郵件地址" class="email-input">
+                        <div class="currency-selection">
+                            <label id="currency-selection-label">選擇要監控的貨幣：</label>
+                            <div class="currency-checkboxes">
+                                <label class="currency-checkbox">
+                                    <input type="checkbox" value="USD" checked>
+                                    <span>🇺🇸 美元 (USD)</span>
+                                </label>
+                                <label class="currency-checkbox">
+                                    <input type="checkbox" value="JPY">
+                                    <span>🇯🇵 日圓 (JPY)</span>
+                                </label>
+                                <label class="currency-checkbox">
+                                    <input type="checkbox" value="CNY">
+                                    <span>🇨🇳 人民幣 (CNY)</span>
+                                </label>
+                                <label class="currency-checkbox">
+                                    <input type="checkbox" value="EUR">
+                                    <span>🇪🇺 歐元 (EUR)</span>
+                                </label>
+                                <label class="currency-checkbox">
+                                    <input type="checkbox" value="KRW">
+                                    <span>🇰🇷 韓元 (KRW)</span>
+                                </label>
+                                <label class="currency-checkbox">
+                                    <input type="checkbox" value="GBP">
+                                    <span>🇬🇧 英鎊 (GBP)</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="notification-time">
+                            <label id="notification-time-label">通知時間：</label>
+                            <select id="notification-time-select" class="time-select">
+                                <option value="09:00">每日於 09:00</option>
+                                <option value="12:00" selected>每日於 12:00</option>
+                                <option value="18:00">每日於 18:00</option>
+                                <option value="21:00">每日於 21:00</option>
+                            </select>
+                        </div>
+                        <button id="email-subscribe-btn" class="subscribe-btn" onclick="subscribeEmail()">訂閱</button>
+                        <button id="email-unsubscribe-btn" class="unsubscribe-btn" onclick="unsubscribeEmail()" style="display:none;">取消訂閱</button>
+                    </div>
+                </div>
+
+                <!-- 訂閱狀態 -->
+                <div id="subscription-status" class="subscription-status" style="display:none;">
+                    <div id="status-message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="disclaimer" style="text-align:center;color:#888;font-size:0.95em;margin:32px 0 12px 0;">
+        本平台匯率僅供參考，實際匯率請以銀行或交易平台為準。
+    </div>
+
+    <script>
+        // 多語言翻譯數據
+        const translations = {
+            en: {
+                title: "🌍 Currency Converter",
+                subtitle: "Real-time exchange rates for 27+ currencies",
+                amount: "Amount",
+                from: "From",
+                to: "To",
+                convert: "Convert",
+                swap: "Swap",
+                search: "Search currencies...",
+                apiStatus: "API Status",
+                connected: "Connected to latest rates",
+                disconnected: "Disconnected",
+                lastUpdate: "Last Update",
+                popularCurrencies: "Popular Currencies",
+                allCurrencies: "All Currencies",
+                result: "Result",
+                enterAmount: "Please enter an amount",
+                selectCurrency: "Please select currencies",
+                error: "Error occurred during conversion",
+                floatingConvert: "Currency Converter",
+                converterTitle: "💱 Exchange Rate Converter",
+                amountLabel: "Amount",
+                resultLabel: "Converted Result",
+                enterAmountPlaceholder: "Enter amount",
+                resultPlaceholder: "Converted result",
+                pageUpdateTime: "Page Update Time",
+                loading: "Loading...",
+                refreshRates: "Refresh Rates",
+                refreshing: "Refreshing...",
+                floatingSearch: "Search Countries",
+                localCurrency: "Local Currency",
+                realTimeRates: "📊 Real-time Exchange Rates",
+                connectingRates: "Connecting to latest rates...",
+                lastUpdateLabel: "Last Update: ",
+                updateRates: "Update Rates",
+                connectingService: "Connecting to exchange service...",
+                connectedToRates: "Connected to latest rates",
+                cannotConnectRates: "Cannot connect to latest rates",
+                cannotConnectService: "Cannot connect to exchange service",
+                exchangeRateCalculation: "Exchange rate calculation",
+                swapCurrencies: "Swap Currencies",
+                swapCurrencySelection: "Swap currency selection",
+                swapAmount: "Swap amount",
+                copyResultBtn: "Copy Result",
+                copied: "Copied",
+                quickCurrencies: ["美元", "台幣", "日圓", "韓元", "歐元"],
+                // 匯率通知訂閱相關
+                rateNotification: "📧 Daily Rate Notifications",
+                subscribeTitle: "Subscribe to Daily Rate Alerts",
+                subscribeDesc: "Get daily notifications for your selected currencies",
+                emailPlaceholder: "Enter your email address",
+                lineNotifyDesc: "Connect LINE Notify for instant notifications",
+                lineNotifyBtn: "Connect LINE Notify",
+                subscribeBtn: "Subscribe",
+                unsubscribeBtn: "Unsubscribe",
+                selectCurrencies: "Select currencies to monitor",
+                notificationTime: "Notification time",
+                dailyAt: "Daily at",
+                subscribeSuccess: "Successfully subscribed!",
+                subscribeError: "Subscription failed. Please try again.",
+                unsubscribeSuccess: "Successfully unsubscribed!",
+                unsubscribeError: "Unsubscription failed. Please try again.",
+                emailRequired: "Email is required",
+                currencyRequired: "Please select at least one currency",
+                freePlan: "Free Plan",
+                premiumPlan: "Premium Plan",
+                freeFeatures: "Daily notifications, 3 currencies",
+                premiumFeatures: "Real-time alerts, unlimited currencies, custom thresholds",
+                upgradeBtn: "Upgrade to Premium",
+                manageSubscriptions: "Manage Subscriptions",
+                floatingEmailBtn: "Subscribe Email Alert"
+            },
+            zh: {
+                title: "🌍 貨幣轉換平台",
+                subtitle: "27+ 種貨幣即時匯率轉換",
+                amount: "金額",
+                from: "從",
+                to: "到",
+                convert: "轉換",
+                swap: "交換",
+                search: "搜尋貨幣...",
+                apiStatus: "API 狀態",
+                connected: "連接最新匯率",
+                disconnected: "連接中斷",
+                lastUpdate: "最後更新",
+                popularCurrencies: "熱門貨幣",
+                allCurrencies: "所有貨幣",
+                result: "結果",
+                enterAmount: "請輸入金額",
+                selectCurrency: "請選擇貨幣",
+                error: "轉換時發生錯誤",
+                floatingConvert: "貨幣轉換",
+                converterTitle: "💱 匯率轉換器",
+                amountLabel: "金額",
+                resultLabel: "轉換結果",
+                enterAmountPlaceholder: "輸入金額",
+                resultPlaceholder: "轉換結果",
+                pageUpdateTime: "頁面更新時間",
+                loading: "載入中...",
+                refreshRates: "刷新匯率",
+                refreshing: "刷新中...",
+                floatingSearch: "搜尋國家",
+                localCurrency: "當地貨幣",
+                realTimeRates: "📊 即時匯率",
+                connectingRates: "連接最新匯率中...",
+                lastUpdateLabel: "最後更新: ",
+                updateRates: "更新匯率",
+                connectingService: "連接匯率服務中...",
+                connectedToRates: "已連接最新匯率",
+                cannotConnectRates: "無法連接最新匯率",
+                cannotConnectService: "無法連接到匯率服務",
+                exchangeRateCalculation: "即時匯率查詢與轉換計算",
+                swapCurrencies: "交換貨幣",
+                swapCurrencySelection: "交換貨幣選擇",
+                swapAmount: "交換金額",
+                copyResultBtn: "複製結果",
+                copied: "已複製",
+                quickCurrencies: ["台幣", "美元", "日圓", "韓元", "歐元"],
+                // 匯率通知訂閱相關
+                rateNotification: "📧 每日匯率通知",
+                subscribeTitle: "訂閱每日匯率提醒",
+                subscribeDesc: "獲取您選擇貨幣的每日通知",
+                emailPlaceholder: "輸入您的電子郵件地址",
+                lineNotifyDesc: "連接 LINE Notify 獲取即時通知",
+                lineNotifyBtn: "連接 LINE Notify",
+                subscribeBtn: "訂閱",
+                unsubscribeBtn: "取消訂閱",
+                selectCurrencies: "選擇要監控的貨幣",
+                notificationTime: "通知時間",
+                dailyAt: "每日於",
+                subscribeSuccess: "訂閱成功！",
+                subscribeError: "訂閱失敗，請重試。",
+                unsubscribeSuccess: "取消訂閱成功！",
+                unsubscribeError: "取消訂閱失敗，請重試。",
+                emailRequired: "請輸入電子郵件",
+                currencyRequired: "請至少選擇一種貨幣",
+                freePlan: "免費方案",
+                premiumPlan: "進階方案",
+                freeFeatures: "每日通知，3種貨幣",
+                premiumFeatures: "即時提醒，無限制貨幣，自訂閾值",
+                upgradeBtn: "升級至進階版",
+                manageSubscriptions: "管理訂閱",
+                floatingEmailBtn: "訂閱匯率通知"
+            },
+            ja: {
+                title: "🌍 通貨換算プラットフォーム",
+                subtitle: "27+通貨のリアルタイム為替レート",
+                amount: "金額",
+                from: "から",
+                to: "へ",
+                convert: "換算",
+                swap: "交換",
+                search: "通貨を検索...",
+                apiStatus: "API ステータス",
+                connected: "最新レートに接続済み",
+                disconnected: "接続切れ",
+                lastUpdate: "最終更新",
+                popularCurrencies: "人気通貨",
+                allCurrencies: "全通貨",
+                result: "結果",
+                enterAmount: "金額を入力してください",
+                selectCurrency: "通貨を選択してください",
+                error: "換算中にエラーが発生しました",
+                floatingConvert: "通貨換算",
+                converterTitle: "💱 為替レート換算機",
+                amountLabel: "金額",
+                resultLabel: "換算結果",
+                enterAmountPlaceholder: "金額を入力",
+                resultPlaceholder: "換算結果",
+                pageUpdateTime: "ページ更新時間",
+                loading: "読み込み中...",
+                refreshRates: "レート更新",
+                refreshing: "更新中...",
+                floatingSearch: "国を検索",
+                localCurrency: "現地通貨",
+                // 匯率通知訂閱相關
+                rateNotification: "📧 日次為替レート通知",
+                subscribeTitle: "日次為替レートアラートを購読",
+                subscribeDesc: "選択した通貨の日次通知を受け取る",
+                emailPlaceholder: "メールアドレスを入力",
+                lineNotifyDesc: "LINE Notifyに接続して即座に通知を受信",
+                lineNotifyBtn: "LINE Notifyに接続",
+                subscribeBtn: "購読",
+                unsubscribeBtn: "購読解除",
+                selectCurrencies: "監視する通貨を選択",
+                notificationTime: "通知時間",
+                dailyAt: "毎日",
+                subscribeSuccess: "購読に成功しました！",
+                subscribeError: "購読に失敗しました。再試行してください。",
+                unsubscribeSuccess: "購読解除に成功しました！",
+                unsubscribeError: "購読解除に失敗しました。再試行してください。",
+                emailRequired: "メールアドレスが必要です",
+                currencyRequired: "少なくとも1つの通貨を選択してください",
+                freePlan: "無料プラン",
+                premiumPlan: "プレミアムプラン",
+                freeFeatures: "日次通知、3通貨",
+                premiumFeatures: "リアルタイムアラート、無制限通貨、カスタム閾値",
+                upgradeBtn: "プレミアムにアップグレード",
+                manageSubscriptions: "購読管理",
+                floatingEmailBtn: "メール通知を購読"
+            },
+            ko: {
+                title: "🌍 통화 변환 플랫폼",
+                subtitle: "27+ 통화 실시간 환율",
+                amount: "금액",
+                from: "에서",
+                to: "로",
+                convert: "변환",
+                swap: "교환",
+                search: "통화 검색...",
+                apiStatus: "API 상태",
+                connected: "최신 환율에 연결됨",
+                disconnected: "연결 끊김",
+                lastUpdate: "마지막 업데이트",
+                popularCurrencies: "인기 통화",
+                allCurrencies: "모든 통화",
+                result: "결과",
+                enterAmount: "금액을 입력하세요",
+                selectCurrency: "통화를 선택하세요",
+                error: "변환 중 오류가 발생했습니다",
+                floatingConvert: "통화 변환",
+                converterTitle: "💱 환율 변환기",
+                amountLabel: "금액",
+                resultLabel: "변환 결과",
+                enterAmountPlaceholder: "금액 입력",
+                resultPlaceholder: "변환 결과",
+                pageUpdateTime: "페이지 업데이트 시간",
+                loading: "로딩 중...",
+                refreshRates: "레이트 새로고침",
+                refreshing: "새로고침 중...",
+                floatingSearch: "국가 검색",
+                localCurrency: "현지 통화",
+                // 匯率通知訂閱相關
+                rateNotification: "📧 일일 환율 알림",
+                subscribeTitle: "일일 환율 알림 구독",
+                subscribeDesc: "선택한 통화의 일일 알림을 받으세요",
+                emailPlaceholder: "이메일 주소를 입력하세요",
+                lineNotifyDesc: "LINE Notify에 연결하여 즉시 알림을 받으세요",
+                lineNotifyBtn: "LINE Notify 연결",
+                subscribeBtn: "구독",
+                unsubscribeBtn: "구독 해지",
+                selectCurrencies: "모니터링할 통화 선택",
+                notificationTime: "알림 시간",
+                dailyAt: "매일",
+                subscribeSuccess: "구독에 성공했습니다!",
+                subscribeError: "구독에 실패했습니다. 다시 시도해 주세요.",
+                unsubscribeSuccess: "구독 해지에 성공했습니다!",
+                unsubscribeError: "구독 해지에 실패했습니다. 다시 시도해 주세요.",
+                emailRequired: "이메일이 필요합니다",
+                currencyRequired: "최소 하나의 통화를 선택해 주세요",
+                freePlan: "무료 플랜",
+                premiumPlan: "프리미엄 플랜",
+                freeFeatures: "일일 알림, 3개 통화",
+                premiumFeatures: "실시간 알림, 무제한 통화, 사용자 정의 임계값",
+                upgradeBtn: "프리미엄으로 업그레이드",
+                manageSubscriptions: "구독 관리",
+                floatingEmailBtn: "이메일 알림 구독"
+            },
+            es: {
+                title: "🌍 Convertidor de Monedas",
+                subtitle: "Tipos de cambio en tiempo real para 27+ monedas",
+                amount: "Cantidad",
+                from: "De",
+                to: "A",
+                convert: "Convertir",
+                swap: "Intercambiar",
+                search: "Buscar monedas...",
+                apiStatus: "Estado API",
+                connected: "Conectado a tasas más recientes",
+                disconnected: "Desconectado",
+                lastUpdate: "Última Actualización",
+                popularCurrencies: "Monedas Populares",
+                allCurrencies: "Todas las Monedas",
+                result: "Resultado",
+                enterAmount: "Por favor ingrese una cantidad",
+                selectCurrency: "Por favor seleccione monedas",
+                error: "Error durante la conversión",
+                floatingConvert: "Convertidor de Monedas",
+                converterTitle: "💱 Convertidor de Tipos de Cambio",
+                amountLabel: "Cantidad",
+                resultLabel: "Resultado Convertido",
+                enterAmountPlaceholder: "Ingrese cantidad",
+                resultPlaceholder: "Resultado convertido",
+                pageUpdateTime: "Tiempo de Actualización de Página",
+                loading: "Cargando...",
+                refreshRates: "Actualizar Tasas",
+                refreshing: "Actualizando...",
+                floatingSearch: "Buscar Países",
+                // 匯率通知訂閱相關
+                rateNotification: "📧 Notificaciones Diarias de Tasas",
+                subscribeTitle: "Suscribirse a Alertas Diarias de Tasas",
+                subscribeDesc: "Reciba notificaciones diarias para sus monedas seleccionadas",
+                emailPlaceholder: "Ingrese su dirección de correo electrónico",
+                lineNotifyDesc: "Conecte LINE Notify para notificaciones instantáneas",
+                lineNotifyBtn: "Conectar LINE Notify",
+                subscribeBtn: "Suscribirse",
+                unsubscribeBtn: "Cancelar Suscripción",
+                selectCurrencies: "Seleccione monedas para monitorear",
+                notificationTime: "Hora de notificación",
+                dailyAt: "Diariamente a las",
+                subscribeSuccess: "¡Suscripción exitosa!",
+                subscribeError: "Error en la suscripción. Por favor intente de nuevo.",
+                unsubscribeSuccess: "¡Cancelación de suscripción exitosa!",
+                unsubscribeError: "Error al cancelar suscripción. Por favor intente de nuevo.",
+                emailRequired: "Se requiere correo electrónico",
+                currencyRequired: "Por favor seleccione al menos una moneda",
+                freePlan: "Plan Gratuito",
+                premiumPlan: "Plan Premium",
+                freeFeatures: "Notificaciones diarias, 3 monedas",
+                premiumFeatures: "Alertas en tiempo real, monedas ilimitadas, umbrales personalizados",
+                upgradeBtn: "Actualizar a Premium",
+                manageSubscriptions: "Gestionar Suscripciones",
+                floatingEmailBtn: "Suscribirse al aviso por correo"
+            },
+            fr: {
+                title: "🌍 Convertisseur de Devises",
+                subtitle: "Taux de change en temps réel pour 27+ devises",
+                amount: "Montant",
+                from: "De",
+                to: "À",
+                convert: "Convertir",
+                swap: "Échanger",
+                search: "Rechercher des devises...",
+                // 匯率通知訂閱相關
+                rateNotification: "📧 Notifications Quotidiennes de Taux",
+                subscribeTitle: "S'abonner aux Alertes Quotidiennes de Taux",
+                subscribeDesc: "Recevez des notifications quotidiennes pour vos devises sélectionnées",
+                emailPlaceholder: "Entrez votre adresse e-mail",
+                lineNotifyDesc: "Connectez LINE Notify pour des notifications instantanées",
+                lineNotifyBtn: "Connecter LINE Notify",
+                subscribeBtn: "S'abonner",
+                unsubscribeBtn: "Se désabonner",
+                selectCurrencies: "Sélectionnez les devises à surveiller",
+                notificationTime: "Heure de notification",
+                dailyAt: "Quotidiennement à",
+                subscribeSuccess: "Abonnement réussi !",
+                subscribeError: "Échec de l'abonnement. Veuillez réessayer.",
+                unsubscribeSuccess: "Désabonnement réussi !",
+                unsubscribeError: "Échec du désabonnement. Veuillez réessayer.",
+                emailRequired: "L'e-mail est requis",
+                currencyRequired: "Veuillez sélectionner au moins une devise",
+                freePlan: "Plan Gratuit",
+                premiumPlan: "Plan Premium",
+                freeFeatures: "Notifications quotidiennes, 3 devises",
+                premiumFeatures: "Alertes en temps réel, devises illimitées, seuils personnalisés",
+                upgradeBtn: "Passer à Premium",
+                manageSubscriptions: "Gérer les Abonnements",
+                floatingEmailBtn: "S'abonner à l'alerte e-mail"
+            }
+        };
+
+        // 貨幣名稱翻譯
+        const currencyNames = {
+            en: {
+                USD: "US Dollar",
+                EUR: "Euro",
+                JPY: "Japanese Yen",
+                CNY: "Chinese Yuan",
+                KRW: "South Korean Won",
+                TWD: "Taiwan Dollar",
+                GBP: "British Pound",
+                CAD: "Canadian Dollar",
+                AUD: "Australian Dollar",
+                CHF: "Swiss Franc",
+                SGD: "Singapore Dollar",
+                HKD: "Hong Kong Dollar",
+                THB: "Thai Baht",
+                MYR: "Malaysian Ringgit",
+                PHP: "Philippine Peso",
+                VND: "Vietnamese Dong",
+                IDR: "Indonesian Rupiah",
+                RUB: "Russian Ruble",
+                ZAR: "South African Rand",
+                MXN: "Mexican Peso",
+                CLP: "Chilean Peso",
+                COP: "Colombian Peso",
+                PEN: "Peruvian Sol",
+                ARS: "Argentine Peso",
+                TRY: "Turkish Lira",
+                BRL: "Brazilian Real",
+                INR: "Indian Rupee"
+            },
+            zh: {
+                USD: "美元",
+                EUR: "歐元",
+                JPY: "日圓",
+                CNY: "人民幣",
+                KRW: "韓元",
+                TWD: "台幣",
+                GBP: "英鎊",
+                CAD: "加拿大元",
+                AUD: "澳洲元",
+                CHF: "瑞士法郎",
+                SGD: "新加坡元",
+                HKD: "港幣",
+                THB: "泰銖",
+                MYR: "馬來西亞令吉",
+                PHP: "菲律賓披索",
+                VND: "越南盾",
+                IDR: "印尼盾",
+                RUB: "俄羅斯盧布",
+                ZAR: "南非蘭特",
+                MXN: "墨西哥披索",
+                CLP: "智利披索",
+                COP: "哥倫比亞披索",
+                PEN: "秘魯索爾",
+                ARS: "阿根廷披索",
+                TRY: "土耳其里拉",
+                BRL: "巴西雷亞爾",
+                INR: "印度盧比"
+            },
+            ja: {
+                USD: "米ドル",
+                EUR: "ユーロ",
+                JPY: "日本円",
+                CNY: "中国人民元",
+                KRW: "韓国ウォン",
+                TWD: "台湾ドル",
+                GBP: "イギリスポンド",
+                CAD: "カナダドル",
+                AUD: "オーストラリアドル",
+                CHF: "スイスフラン",
+                SGD: "シンガポールドル",
+                HKD: "香港ドル",
+                THB: "タイバーツ",
+                MYR: "マレーシアリンギット",
+                PHP: "フィリピンペソ",
+                VND: "ベトナムドン",
+                IDR: "インドネシアルピア",
+                RUB: "ロシアルーブル",
+                ZAR: "南アフリカランド",
+                MXN: "メキシコペソ",
+                CLP: "チリペソ",
+                COP: "コロンビアペソ",
+                PEN: "ペルーソル",
+                ARS: "アルゼンチンペソ",
+                TRY: "トルコリラ",
+                BRL: "ブラジルレアル",
+                INR: "インドルピー"
+            },
+            ko: {
+                USD: "미국 달러",
+                EUR: "유로",
+                JPY: "일본 엔",
+                CNY: "중국 위안",
+                KRW: "한국 원",
+                TWD: "대만 달러",
+                GBP: "영국 파운드",
+                CAD: "캐나다 달러",
+                AUD: "호주 달러",
+                CHF: "스위스 프랑",
+                SGD: "싱가포르 달러",
+                HKD: "홍콩 달러",
+                THB: "태국 바트",
+                MYR: "말레이시아 링깃",
+                PHP: "필리핀 페소",
+                VND: "베트남 동",
+                IDR: "인도네시아 루피아",
+                RUB: "러시아 루블",
+                ZAR: "남아프리카 랜드",
+                MXN: "멕시코 페소",
+                CLP: "칠레 페소",
+                COP: "콜롬비아 페소",
+                PEN: "페루 솔",
+                ARS: "아르헨티나 페소",
+                TRY: "터키 리라",
+                BRL: "브라질 헤알",
+                INR: "인도 루피"
+            },
+            es: {
+                USD: "Dólar Estadounidense",
+                EUR: "Euro",
+                JPY: "Yen Japonés",
+                CNY: "Yuan Chino",
+                KRW: "Won Surcoreano",
+                TWD: "Dólar Taiwanés",
+                GBP: "Libra Esterlina",
+                CAD: "Dólar Canadiense",
+                AUD: "Dólar Australiano",
+                CHF: "Franco Suizo",
+                SGD: "Dólar de Singapur",
+                HKD: "Dólar de Hong Kong",
+                THB: "Baht Tailandés",
+                MYR: "Ringgit Malayo",
+                PHP: "Peso Filipino",
+                VND: "Dong Vietnamita",
+                IDR: "Rupia Indonesia",
+                RUB: "Rublo Ruso",
+                ZAR: "Rand Sudafricano",
+                MXN: "Peso Mexicano",
+                CLP: "Peso Chileno",
+                COP: "Peso Colombiano",
+                PEN: "Sol Peruano",
+                ARS: "Peso Argentino",
+                TRY: "Lira Turca",
+                BRL: "Real Brasileño",
+                INR: "Rupia India"
+            },
+            fr: {
+                USD: "Dollar Américain",
+                EUR: "Euro",
+                JPY: "Yen Japonais",
+                CNY: "Yuan Chinois",
+                KRW: "Won Sud-Coréen",
+                TWD: "Dollar Taïwanais",
+                GBP: "Livre Sterling",
+                CAD: "Dollar Canadien",
+                AUD: "Dollar Australien",
+                CHF: "Franc Suisse",
+                SGD: "Dollar de Singapour",
+                HKD: "Dollar de Hong Kong",
+                THB: "Baht Thaïlandais",
+                MYR: "Ringgit Malaisien",
+                PHP: "Peso Philippin",
+                VND: "Dong Vietnamien",
+                IDR: "Roupie Indonésienne",
+                RUB: "Rouble Russe",
+                ZAR: "Rand Sud-Africain",
+                MXN: "Peso Mexicain",
+                CLP: "Peso Chilien",
+                COP: "Peso Colombien",
+                PEN: "Sol Péruvien",
+                ARS: "Peso Argentin",
+                TRY: "Livre Turque",
+                BRL: "Real Brésilien",
+                INR: "Roupie Indienne",
+                copyResultBtn: "Copier le résultat",
+                copied: "Copié"
+            }
+        };
+
+        // 語言配置
+        const languageConfig = {
+            en: { flag: "🇺🇸", name: "English", defaultCurrency: "USD", localCurrency: "USD" },
+            zh: { flag: "🇹🇼", name: "繁體中文", defaultCurrency: "TWD", localCurrency: "TWD" },
+            ja: { flag: "🇯🇵", name: "日本語", defaultCurrency: "JPY", localCurrency: "JPY" },
+            ko: { flag: "🇰🇷", name: "한국어", defaultCurrency: "KRW", localCurrency: "KRW" },
+            es: { flag: "🇪🇸", name: "Español", defaultCurrency: "EUR", localCurrency: "EUR" },
+            fr: { flag: "🇫🇷", name: "Français", defaultCurrency: "EUR", localCurrency: "EUR" }
+        };
+
+        // 各地區貨幣優先順序
+        const currencyPriority = {
+            en: ['USD', 'EUR', 'GBP', 'JPY', 'CNY', 'KRW', 'TWD', 'CAD', 'AUD', 'CHF', 'SGD', 'HKD', 'THB', 'MYR', 'PHP', 'VND', 'IDR', 'RUB', 'ZAR', 'MXN', 'CLP', 'COP', 'PEN', 'ARS', 'TRY', 'BRL', 'INR'],
+            zh: ['TWD', 'USD', 'CNY', 'JPY', 'KRW', 'EUR', 'GBP', 'HKD', 'SGD', 'THB', 'MYR', 'PHP', 'VND', 'IDR', 'CAD', 'AUD', 'CHF', 'RUB', 'ZAR', 'MXN', 'CLP', 'COP', 'PEN', 'ARS', 'TRY', 'BRL', 'INR'],
+            ja: ['JPY', 'USD', 'EUR', 'CNY', 'KRW', 'TWD', 'GBP', 'SGD', 'HKD', 'THB', 'MYR', 'PHP', 'VND', 'IDR', 'CAD', 'AUD', 'CHF', 'RUB', 'ZAR', 'MXN', 'CLP', 'COP', 'PEN', 'ARS', 'TRY', 'BRL', 'INR'],
+            ko: ['KRW', 'USD', 'JPY', 'CNY', 'TWD', 'EUR', 'GBP', 'SGD', 'HKD', 'THB', 'MYR', 'PHP', 'VND', 'IDR', 'CAD', 'AUD', 'CHF', 'RUB', 'ZAR', 'MXN', 'CLP', 'COP', 'PEN', 'ARS', 'TRY', 'BRL', 'INR'],
+            es: ['EUR', 'USD', 'GBP', 'JPY', 'CNY', 'KRW', 'TWD', 'MXN', 'ARS', 'CLP', 'COP', 'PEN', 'BRL', 'CAD', 'AUD', 'CHF', 'SGD', 'HKD', 'THB', 'MYR', 'PHP', 'VND', 'IDR', 'RUB', 'ZAR', 'TRY', 'INR'],
+            fr: ['EUR', 'USD', 'GBP', 'JPY', 'CNY', 'KRW', 'TWD', 'CHF', 'CAD', 'AUD', 'SGD', 'HKD', 'THB', 'MYR', 'PHP', 'VND', 'IDR', 'RUB', 'ZAR', 'MXN', 'CLP', 'COP', 'PEN', 'ARS', 'TRY', 'BRL', 'INR']
+        };
+
+        // 當前語言
+        let currentLanguage = 'en';
+
+        // 初始化語言
+        function initLanguage() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const lang = urlParams.get('lang') || 'en';
+            changeLanguage(lang);
+        }
+
+        // 切換語言下拉選單
+        function toggleLanguageDropdown() {
+            const dropdown = document.querySelector('.language-selector');
+            dropdown.classList.toggle('show');
+        }
+
+        // 更改語言
+        function changeLanguage(lang) {
+            document.documentElement.lang = lang;
+            currentLanguage = lang;
+            if (!translations[lang]) return;
+            const t = translations[lang];
+            const config = languageConfig[lang];
+            
+            // 更新即時匯率標題
+            const realTimeRatesTitle = document.querySelector('.rates-header h2');
+            if (realTimeRatesTitle) realTimeRatesTitle.textContent = t.realTimeRates;
+            
+            // 更新語言選擇器
+            document.getElementById('current-flag').textContent = config.flag;
+            document.getElementById('current-language').textContent = config.name;
+            
+            // 更新頁面文字
+            document.querySelector('.header h1').textContent = t.title;
+            document.querySelector('.header p').textContent = t.exchangeRateCalculation;
+            
+            // 更新轉換器區域
+            const converterTitle = document.querySelector('.converter-title');
+            if (converterTitle) converterTitle.textContent = t.converterTitle;
+            
+            // 更新標籤和佔位符
+            const amountLabels = document.querySelectorAll('label[for="amount"], label[for="amount1"]');
+            amountLabels.forEach(label => label.textContent = t.amountLabel);
+            
+            const resultLabels = document.querySelectorAll('label[for="amount2"]');
+            resultLabels.forEach(label => label.textContent = t.resultLabel);
+            
+            // 更新轉換器標籤
+            const fromLabels = document.querySelectorAll('label[for="fromCurrency"], label[for="currency1"]');
+            fromLabels.forEach(label => label.textContent = t.from);
+            
+            const toLabels = document.querySelectorAll('label[for="toCurrency"], label[for="currency2"]');
+            toLabels.forEach(label => label.textContent = t.to);
+            
+            // 更新按鈕文字
+            const convertBtns = document.querySelectorAll('.convert-btn');
+            convertBtns.forEach(btn => btn.textContent = t.convert);
+            
+            const swapBtns = document.querySelectorAll('.swap-btn');
+            swapBtns.forEach(btn => {
+                if (btn.textContent !== '⇄') {
+                    btn.textContent = t.swap;
+                }
+            });
+            
+            // 更新搜尋框
+            const searchInput = document.getElementById('currency-search');
+            if (searchInput) searchInput.placeholder = t.search;
+            
+            // 更新狀態和標題
+            const apiStatusTitles = document.querySelectorAll('.api-status h3');
+            apiStatusTitles.forEach(title => title.textContent = t.apiStatus);
+            
+            const lastUpdateTitles = document.querySelectorAll('.last-update h3');
+            lastUpdateTitles.forEach(title => title.textContent = t.lastUpdate);
+            
+            const popularTitles = document.querySelectorAll('.popular-currencies h3');
+            popularTitles.forEach(title => title.textContent = t.popularCurrencies);
+            
+            const allCurrenciesTitles = document.querySelectorAll('.all-currencies h3');
+            allCurrenciesTitles.forEach(title => title.textContent = t.allCurrencies);
+            
+            const resultTitles = document.querySelectorAll('.result h3');
+            resultTitles.forEach(title => title.textContent = t.result);
+            
+            // 更新頁面更新時間
+            const updateTimeLabels = document.querySelectorAll('.update-time');
+            updateTimeLabels.forEach(label => {
+                if (label.textContent.includes('頁面更新時間') || label.textContent.includes('Page Update Time')) {
+                    label.textContent = `${t.pageUpdateTime}: <span id="update-time"></span>`;
+                }
+            });
+            
+            // 更新載入中文字
+            const loadingElements = document.querySelectorAll('.rate-value, .rate-label');
+            loadingElements.forEach(element => {
+                if (element.textContent.includes('載入中') || element.textContent.includes('Loading')) {
+                    element.textContent = element.textContent.replace(/載入中\.\.\.|Loading\.\.\./g, t.loading + '...');
+                }
+            });
+            
+            // 更新貨幣選項
+            updateCurrencyOptions();
+            
+            // 更新匯率卡片標題
+            updateRateCardTitles();
+            
+            // 更新匯率卡片順序
+            updateRateCardOrder();
+            
+            // 更新浮空按鈕文字
+            const floatingBtnText = document.getElementById('floating-btn-text');
+            if (floatingBtnText) {
+                floatingBtnText.textContent = t.floatingConvert;
+            }
+            
+            // 更新搜尋浮空按鈕文字
+            const floatingSearchText = document.getElementById('floating-search-text');
+            if (floatingSearchText) {
+                floatingSearchText.textContent = t.floatingSearch;
+            }
+            
+            // 更新刷新按鈕文字
+            const refreshText = document.getElementById('refresh-text');
+            if (refreshText && !refreshText.textContent.includes('...')) {
+                refreshText.textContent = t.refreshRates;
+            }
+            
+            // 更新當地貨幣標籤
+            const localCurrencyBadge = document.querySelector('.local-currency-badge');
+            if (localCurrencyBadge) {
+                localCurrencyBadge.textContent = t.localCurrency;
+            }
+            
+            // 更新URL參數
+            const url = new URL(window.location);
+            url.searchParams.set('lang', lang);
+            window.history.replaceState({}, '', url);
+            
+            // 關閉下拉選單
+            const dropdown = document.querySelector('.language-selector');
+            if (dropdown) dropdown.classList.remove('show');
+            
+            // 更新選項的active狀態
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            event.target.closest('.language-option').classList.add('active');
+
+            // 語言切換後即時更新貨幣轉換結果
+            convert();
+
+            // 語言切換後即時更新所有匯率卡片內容
+            if (typeof rates === 'object') {
+                Object.keys(rates).forEach(currency => {
+                    updateRateDisplay(currency, rates[currency]);
+                });
+            }
+            
+            // 更新狀態顯示
+            const statusIndicator = document.getElementById('api-status');
+            if (statusIndicator) {
+                if (statusIndicator.classList.contains('online')) {
+                    updateStatus('online', '');
+                } else if (statusIndicator.classList.contains('loading')) {
+                    updateStatus('loading', '');
+                } else if (statusIndicator.classList.contains('offline')) {
+                    updateStatus('offline', '');
+                }
+            }
+
+            // 在translations每個語言加上copyResultBtn: "複製結果"/"Copy Result"等
+            // ...（略，假設已加好）...
+
+            // 在changeLanguage函數內加：
+            const copyBtn = document.getElementById('copy-result-btn');
+            if (copyBtn) copyBtn.textContent = t.copyResultBtn || '複製結果';
+
+            // 在複製成功時也用t.copyResultBtn
+            document.getElementById('copy-result-btn').onclick = function() {
+                const value = document.getElementById('result-value').textContent;
+                const label = document.getElementById('result-label').textContent;
+                navigator.clipboard.writeText(`${label}: ${value}`);
+                this.textContent = t.copied || '已複製';
+                setTimeout(()=>{ this.textContent = t.copyResultBtn || '複製結果'; }, 1500);
+            };
+
+            // 在changeLanguage函數內加：
+            const quickBtns = document.querySelectorAll('.quick-currency-select .quick-btn');
+            if (quickBtns && t.quickCurrencies) {
+                quickBtns.forEach((btn, idx) => {
+                    btn.textContent = t.quickCurrencies[idx] || btn.textContent;
+                });
+            }
+
+            // 動態渲染常用貨幣按鈕
+            renderQuickCurrencyButtons(lang);
+
+            // 更新匯率通知訂閱功能文字
+            updateNotificationTexts(lang);
+
+            // 在changeLanguage函數內加：
+            const floatingEmailText = document.getElementById('floating-email-text');
+            if (floatingEmailText) floatingEmailText.textContent = t.floatingEmailBtn || '每日匯率通知';
+        }
+
+        // 更新貨幣選項
+        function updateCurrencyOptions() {
+            const allCurrencies = [
+                { code: 'USD', flag: '🇺🇸' },
+                { code: 'EUR', flag: '🇪🇺' },
+                { code: 'JPY', flag: '🇯🇵' },
+                { code: 'CNY', flag: '🇨🇳' },
+                { code: 'KRW', flag: '🇰🇷' },
+                { code: 'TWD', flag: '🇹🇼' },
+                { code: 'GBP', flag: '🇬🇧' },
+                { code: 'CAD', flag: '🇨🇦' },
+                { code: 'AUD', flag: '🇦🇺' },
+                { code: 'CHF', flag: '🇨🇭' },
+                { code: 'SGD', flag: '🇸🇬' },
+                { code: 'HKD', flag: '🇭🇰' },
+                { code: 'THB', flag: '🇹🇭' },
+                { code: 'MYR', flag: '🇲🇾' },
+                { code: 'PHP', flag: '🇵🇭' },
+                { code: 'VND', flag: '🇻🇳' },
+                { code: 'IDR', flag: '🇮🇩' },
+                { code: 'RUB', flag: '🇷🇺' },
+                { code: 'ZAR', flag: '🇿🇦' },
+                { code: 'MXN', flag: '🇲🇽' },
+                { code: 'CLP', flag: '🇨🇱' },
+                { code: 'COP', flag: '🇨🇴' },
+                { code: 'PEN', flag: '🇵🇪' },
+                { code: 'ARS', flag: '🇦🇷' },
+                { code: 'TRY', flag: '🇹🇷' },
+                { code: 'BRL', flag: '🇧🇷' },
+                { code: 'INR', flag: '🇮🇳' }
+            ];
+
+            // 根據當前語言排序貨幣
+            const priority = currencyPriority[currentLanguage] || currencyPriority.en;
+            const sortedCurrencies = [...allCurrencies].sort((a, b) => {
+                const aIndex = priority.indexOf(a.code);
+                const bIndex = priority.indexOf(b.code);
+                return aIndex - bIndex;
+            });
+
+            const selectElements = document.querySelectorAll('#fromCurrency, #toCurrency, #currency1, #currency2');
+            
+            selectElements.forEach(select => {
+                const currentValue = select.value;
+                select.innerHTML = '';
+                
+                sortedCurrencies.forEach(currency => {
+                    const option = document.createElement('option');
+                    option.value = currency.code;
+                    const currencyName = currencyNames[currentLanguage]?.[currency.code] || currency.code;
+                    option.textContent = `${currency.flag} ${currencyName} (${currency.code})`;
+                    select.appendChild(option);
+                });
+                
+                // 恢復之前選擇的值，如果沒有則使用預設貨幣
+                if (currentValue && sortedCurrencies.some(c => c.code === currentValue)) {
+                    select.value = currentValue;
+                } else {
+                    const config = languageConfig[currentLanguage];
+                    select.value = config.defaultCurrency;
+                }
+            });
+        }
+
+        // 更新匯率卡片標題
+        function updateRateCardTitles() {
+            const rateCards = document.querySelectorAll('.rate-card h3');
+            
+            rateCards.forEach(card => {
+                const currencyCode = card.textContent.match(/\(([A-Z]{3})\)/)?.[1];
+                if (currencyCode && currencyNames[currentLanguage]?.[currencyCode]) {
+                    const flag = card.textContent.match(/^[^\s]+/)?.[0] || '🌍';
+                    const currencyName = currencyNames[currentLanguage][currencyCode];
+                    card.textContent = `${flag} ${currencyName} (${currencyCode})`;
+                }
+            });
+        }
+
+        // 更新匯率卡片順序
+        function updateRateCardOrder() {
+            const ratesGrid = document.querySelector('.rates-grid');
+            if (!ratesGrid) return;
+
+            const priority = currencyPriority[currentLanguage] || currencyPriority.en;
+            const rateCards = Array.from(ratesGrid.querySelectorAll('.rate-card'));
+            
+            // 根據優先順序排序卡片
+            rateCards.sort((a, b) => {
+                const aCurrency = a.getAttribute('data-currency');
+                const bCurrency = b.getAttribute('data-currency');
+                const aIndex = priority.indexOf(aCurrency);
+                const bIndex = priority.indexOf(bCurrency);
+                return aIndex - bIndex;
+            });
+
+            // 重新排列卡片
+            rateCards.forEach(card => {
+                ratesGrid.appendChild(card);
+            });
+        }
+
+        // 點擊外部關閉語言下拉選單
+        document.addEventListener('click', function(event) {
+            const languageSelector = document.querySelector('.language-selector');
+            if (!languageSelector.contains(event.target)) {
+                document.querySelector('.language-selector').classList.remove('show');
+            }
+        });
+
+        // 頁面載入時初始化語言
+        document.addEventListener('DOMContentLoaded', function() {
+            let browserLang = navigator.language || navigator.userLanguage || 'en';
+            let lang = 'en';
+            if (browserLang.startsWith('zh')) lang = 'zh';
+            changeLanguage(lang);
+        });
+
+        // 本地化數字格式
+        function formatNumber(number, locale = 'en-US') {
+            const locales = {
+                'en': 'en-US',
+                'zh': 'zh-TW',
+                'ja': 'ja-JP',
+                'ko': 'ko-KR',
+                'es': 'es-ES',
+                'fr': 'fr-FR'
+            };
+            
+            const currentLocale = locales[currentLanguage] || 'en-US';
+            
+            return new Intl.NumberFormat(currentLocale, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6
+            }).format(number);
+        }
+
+        // 本地化日期時間格式
+        function formatDateTime(date, locale = 'en-US') {
+            const locales = {
+                'en': 'en-US',
+                'zh': 'zh-TW',
+                'ja': 'ja-JP',
+                'ko': 'ko-KR',
+                'es': 'es-ES',
+                'fr': 'fr-FR'
+            };
+            
+            const currentLocale = locales[currentLanguage] || 'en-US';
+            
+            return new Intl.DateTimeFormat(currentLocale, {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                timeZoneName: 'short'
+            }).format(date);
+        }
+
+        // 貨幣本地化顯示
+        function formatCurrency(amount, currencyCode) {
+            const locales = {
+                'en': 'en-US',
+                'zh': 'zh-TW',
+                'ja': 'ja-JP',
+                'ko': 'ko-KR',
+                'es': 'es-ES',
+                'fr': 'fr-FR'
+            };
+            
+            const currentLocale = locales[currentLanguage] || 'en-US';
+            
+            return new Intl.NumberFormat(currentLocale, {
+                style: 'currency',
+                currency: currencyCode,
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 6
+            }).format(amount);
+        }
+
+        // 創建粒子動畫
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // 隨機大小
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // 隨機位置
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // 隨機動畫延遲
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // 匯率資料 (會從API更新)
+        let rates = {
+            TWD: 1,
+            USD: 31.25,
+            EUR: 34.50,
+            GBP: 40.20,
+            JPY: 0.21,
+            CNY: 4.35,
+            KRW: 0.024,
+            CAD: 23.50,
+            AUD: 20.80,
+            CHF: 35.20,
+            SGD: 23.10,
+            HKD: 4.00,
+            THB: 0.88,
+            MYR: 6.70,
+            PHP: 0.56,
+            VND: 0.0013,
+            IDR: 0.0020,
+            RUB: 0.34,
+            ZAR: 1.70,
+            MXN: 1.85,
+            CLP: 0.035,
+            COP: 0.008,
+            PEN: 8.40,
+            ARS: 0.035,
+            TRY: 1.05,
+            BRL: 6.50,
+            INR: 0.38
+        };
+
+        // 前一次匯率 (用於比較變化)
+        let previousRates = {};
+
+        // 貨幣符號
+        const symbols = {
+            TWD: 'NT$',
+            USD: '$',
+            EUR: '€',
+            GBP: '£',
+            JPY: '¥',
+            CNY: '¥',
+            KRW: '₩',
+            CAD: 'C$',
+            AUD: 'A$',
+            CHF: 'CHF',
+            SGD: 'S$',
+            HKD: 'HK$',
+            THB: '฿',
+            MYR: 'RM',
+            PHP: '₱',
+            VND: '₫',
+            IDR: 'Rp',
+            RUB: '₽',
+            ZAR: 'R',
+            MXN: '$',
+            CLP: '$',
+            COP: '$',
+            PEN: 'S/',
+            ARS: 'AR$',
+            TRY: '₺',
+            BRL: 'R$',
+            INR: '₹'
+        };
+
+        // 貨幣名稱
+        const names = {
+            TWD: '台幣',
+            USD: '美元',
+            EUR: '歐元',
+            GBP: '英鎊',
+            JPY: '日圓',
+            CNY: '人民幣',
+            KRW: '韓元',
+            CAD: '加拿大元',
+            AUD: '澳洲元',
+            CHF: '瑞士法郎',
+            SGD: '新加坡元',
+            HKD: '港幣',
+            THB: '泰銖',
+            MYR: '馬來西亞令吉',
+            PHP: '菲律賓披索',
+            VND: '越南盾',
+            IDR: '印尼盾',
+            RUB: '俄羅斯盧布',
+            ZAR: '南非蘭特',
+            MXN: '墨西哥披索',
+            CLP: '智利披索',
+            COP: '哥倫比亞披索',
+            PEN: '秘魯索爾',
+            ARS: '阿根廷披索',
+            TRY: '土耳其里拉',
+            BRL: '巴西雷亞爾',
+            INR: '印度盧比'
+        };
+
+        // 國家搜尋詞彙
+        const countryKeywords = {
+            TWD: ['台灣', '中華民國', '台幣', '新台幣', 'taiwan', 'taiwanese dollar', 'ntd'],
+            USD: ['美國', '美利堅', '美金', '美元', 'united states', 'usa', 'us dollar', 'american dollar'],
+            EUR: ['歐盟', '歐洲', '歐元區', '歐元', 'european union', 'europe', 'eurozone', 'euro'],
+            GBP: ['英國', '大不列顛', '英格蘭', '英鎊', 'united kingdom', 'uk', 'great britain', 'england', 'pound sterling'],
+            JPY: ['日本', '日圓', '日元', '日幣', 'japan', 'japanese yen', 'yen'],
+            CNY: ['中國', '中華人民共和國', '人民幣', '人民幣', 'china', 'chinese yuan', 'yuan', 'rmb'],
+            KRW: ['韓國', '大韓民國', '韓元', '韓幣', 'korea', 'south korea', 'korean won', 'won'],
+            CAD: ['加拿大', '加拿大元', '加元', 'canada', 'canadian dollar', 'loonie'],
+            AUD: ['澳洲', '澳大利亞', '澳洲元', '澳元', 'australia', 'australian dollar', 'aussie'],
+            CHF: ['瑞士', '瑞士法郎', '法郎', 'switzerland', 'swiss franc', 'franc'],
+            SGD: ['新加坡', '新加坡元', '新元', 'singapore', 'singapore dollar'],
+            HKD: ['香港', '港幣', '港元', 'hong kong', 'hong kong dollar'],
+            THB: ['泰國', '泰銖', '泰幣', 'thailand', 'thai baht', 'baht'],
+            MYR: ['馬來西亞', '馬來西亞令吉', '令吉', 'malaysia', 'malaysian ringgit', 'ringgit'],
+            PHP: ['菲律賓', '菲律賓披索', '菲幣', 'philippines', 'philippine peso', 'peso'],
+            VND: ['越南', '越南盾', '越幣', 'vietnam', 'vietnamese dong', 'dong'],
+            IDR: ['印尼', '印度尼西亞', '印尼盾', '印尼幣', 'indonesia', 'indonesian rupiah', 'rupiah'],
+            RUB: ['俄羅斯', '俄羅斯盧布', '盧布', 'russia', 'russian ruble', 'ruble'],
+            ZAR: ['南非', '南非蘭特', '蘭特', 'south africa', 'south african rand', 'rand'],
+            MXN: ['墨西哥', '墨西哥披索', '墨幣', 'mexico', 'mexican peso', 'peso'],
+            CLP: ['智利', '智利披索', '智幣', 'chile', 'chilean peso', 'peso'],
+            COP: ['哥倫比亞', '哥倫比亞披索', '哥幣', 'colombia', 'colombian peso', 'peso'],
+            PEN: ['秘魯', '秘魯索爾', '秘幣', 'peru', 'peruvian sol', 'sol'],
+            ARS: ['阿根廷', '阿根廷披索', '披索', 'argentina', 'argentine peso', 'peso'],
+            TRY: ['土耳其', '土耳其里拉', '里拉', 'turkey', 'turkish lira', 'lira'],
+            BRL: ['巴西', '巴西雷亞爾', '雷亞爾', 'brazil', 'brazilian real', 'real'],
+            INR: ['印度', '印度盧比', '盧比', 'india', 'indian rupee', 'rupee']
+        };
+
+        // 國旗 emoji 對應表
+        const currencyFlags = {
+            TWD: '🇹🇼',
+            USD: '🇺🇸',
+            EUR: '🇪🇺',
+            GBP: '🇬🇧',
+            JPY: '🇯🇵',
+            CNY: '🇨🇳',
+            KRW: '🇰🇷',
+            ARS: '🇦🇷',
+            TRY: '🇹🇷',
+            BRL: '🇧🇷',
+            INR: '🇮🇳',
+            CAD: '🇨🇦',
+            AUD: '🇦🇺',
+            CHF: '🇨🇭',
+            SGD: '🇸🇬',
+            HKD: '🇭🇰',
+            THB: '🇹🇭',
+            MYR: '🇲🇾',
+            PHP: '🇵🇭',
+            VND: '🇻🇳',
+            IDR: '🇮🇩',
+            RUB: '🇷🇺',
+            ZAR: '🇿🇦',
+            MXN: '🇲🇽',
+            CLP: '🇨🇱',
+            COP: '🇨🇴',
+            PEN: '🇵🇪'
+        };
+
+        // 動態生成 select 選單（含國旗）
+        function renderCurrencySelect(selectId, selectedValue) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+            const options = [
+                { code: 'TWD', name: '台幣 (TWD)' },
+                { code: 'USD', name: '美元 (USD)' },
+                { code: 'EUR', name: '歐元 (EUR)' },
+                { code: 'GBP', name: '英鎊 (GBP)' },
+                { code: 'JPY', name: '日圓 (JPY)' },
+                { code: 'CNY', name: '人民幣 (CNY)' },
+                { code: 'KRW', name: '韓元 (KRW)' },
+                { code: 'CAD', name: '加拿大元 (CAD)' },
+                { code: 'AUD', name: '澳洲元 (AUD)' },
+                { code: 'CHF', name: '瑞士法郎 (CHF)' },
+                { code: 'SGD', name: '新加坡元 (SGD)' },
+                { code: 'HKD', name: '港幣 (HKD)' },
+                { code: 'THB', name: '泰銖 (THB)' },
+                { code: 'MYR', name: '馬來西亞令吉 (MYR)' },
+                { code: 'PHP', name: '菲律賓披索 (PHP)' },
+                { code: 'VND', name: '越南盾 (VND)' },
+                { code: 'IDR', name: '印尼盾 (IDR)' },
+                { code: 'RUB', name: '俄羅斯盧布 (RUB)' },
+                { code: 'ZAR', name: '南非蘭特 (ZAR)' },
+                { code: 'MXN', name: '墨西哥披索 (MXN)' },
+                { code: 'CLP', name: '智利披索 (CLP)' },
+                { code: 'COP', name: '哥倫比亞披索 (COP)' },
+                { code: 'PEN', name: '秘魯索爾 (PEN)' },
+                { code: 'ARS', name: '阿根廷披索 (ARS)' },
+                { code: 'TRY', name: '土耳其里拉 (TRY)' },
+                { code: 'BRL', name: '巴西雷亞爾 (BRL)' },
+                { code: 'INR', name: '印度盧比 (INR)' }
+            ];
+            select.innerHTML = options.map(opt =>
+                `<option value="${opt.code}"${selectedValue===opt.code? ' selected' : ''}>
+                    ${currencyFlags[opt.code] || ''} ${opt.name}
+                </option>`
+            ).join('');
+        }
+
+        // 初始化 select
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCurrencySelect('currency1', document.getElementById('currency1')?.value || 'TWD');
+            renderCurrencySelect('currency2', document.getElementById('currency2')?.value || 'USD');
+            updateFlag('currency1', 'flag1');
+            updateFlag('currency2', 'flag2');
+        });
+
+        // 更新狀態指示器
+        function updateStatus(status, message) {
+            const statusIndicator = document.getElementById('api-status');
+            const statusText = document.getElementById('api-status-text');
+            
+            // 移除所有狀態類別
+            statusIndicator.classList.remove('online', 'offline', 'loading');
+            
+            // 添加新狀態類別
+            statusIndicator.classList.add(status);
+            
+            // 根據當前語言更新狀態文字
+            const currentLang = document.documentElement.lang || currentLanguage || 'zh';
+            const t = translations[currentLang] || translations.zh;
+            let displayText = message;
+            
+            if (status === 'loading') {
+                displayText = t.connectingRates || '連接最新匯率中...';
+            } else if (status === 'online') {
+                displayText = t.connectedToRates || '已連接最新匯率';
+            } else if (status === 'offline') {
+                displayText = t.cannotConnectRates || '無法連接最新匯率';
+            }
+            
+            statusText.textContent = displayText;
+        }
+
+        // 顯示錯誤訊息
+        function showError(message) {
+            const errorElement = document.getElementById('error-message');
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+            setTimeout(() => {
+                errorElement.style.display = 'none';
+            }, 5000);
+        }
+
+        // 隱藏錯誤訊息
+        function hideError() {
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        // 更新匯率顯示
+        function updateRateDisplay(currency, rate) {
+            const rateElement = document.getElementById(`${currency.toLowerCase()}-rate`);
+            const labelElement = document.getElementById(`${currency.toLowerCase()}-label`);
+            const changeElement = document.getElementById(`${currency.toLowerCase()}-change`);
+            const currentLang = document.documentElement.lang || currentLanguage || 'zh';
+            const currencyNames = getCurrencyNames(currentLang);
+
+            // 根據語言決定目標貨幣
+            let targetCurrency = 'USD';
+            if (currentLang === 'zh') targetCurrency = 'TWD';
+            if (currentLang === 'ja') targetCurrency = 'JPY';
+            if (currentLang === 'ko') targetCurrency = 'KRW';
+            if (currentLang === 'fr' || currentLang === 'es') targetCurrency = 'EUR';
+
+            if (rateElement && labelElement) {
+                if (currency === targetCurrency) {
+                    // 自己對自己顯示 1
+                    rateElement.textContent = '1.0000';
+                    labelElement.textContent = `1 ${currencyNames[currency] || currency} = 1.0000 ${currencyNames[targetCurrency] || targetCurrency}`;
+                } else {
+                    // 其他貨幣顯示對目標貨幣的匯率
+                    const toTarget = rates[targetCurrency] ? (rates[currency] / rates[targetCurrency]) : rate;
+                    rateElement.textContent = toTarget.toFixed(4);
+                    labelElement.textContent = `1 ${currencyNames[currency] || currency} = ${toTarget.toFixed(4)} ${currencyNames[targetCurrency] || targetCurrency}`;
+                }
+                // 顯示匯率變化
+                if (previousRates[currency] && previousRates[currency] !== rate) {
+                    const change = rate - previousRates[currency];
+                    const changePercent = (change / previousRates[currency]) * 100;
+                    changeElement.textContent = `${change >= 0 ? '+' : ''}${changePercent.toFixed(2)}%`;
+                    changeElement.className = `rate-change ${change >= 0 ? 'positive' : 'negative'}`;
+                } else {
+                    changeElement.textContent = '';
+                    changeElement.className = 'rate-change';
+                }
+            }
+        }
+
+        // 從API獲取最新匯率
+        async function fetchLatestRates() {
+            const refreshBtn = document.getElementById('refresh-btn');
+            const refreshIcon = document.getElementById('refresh-icon');
+            const refreshText = document.getElementById('refresh-text');
+            
+            // 禁用按鈕並顯示載入狀態
+            refreshBtn.disabled = true;
+            refreshIcon.textContent = '⏳';
+            refreshText.textContent = '更新中...';
+            updateStatus('loading', '連接最新匯率中...');
+            hideError();
+
+            try {
+                // 使用免費的匯率API (不需要API key)
+                const response = await fetch('https://api.exchangerate-api.com/v4/latest/TWD');
+                
+                if (!response.ok) {
+                    throw new Error('無法連接到匯率服務');
+                }
+
+                const data = await response.json();
+                
+                // 儲存前一次匯率
+                previousRates = { ...rates };
+                
+                // 更新匯率 (轉換為對台幣的匯率)
+                const baseRate = data.rates.TWD;
+                rates = {
+                    TWD: 1,
+                    USD: 1 / data.rates.USD,
+                    EUR: 1 / data.rates.EUR,
+                    GBP: 1 / data.rates.GBP,
+                    JPY: 1 / data.rates.JPY,
+                    CNY: 1 / data.rates.CNY,
+                    KRW: 1 / data.rates.KRW,
+                    CAD: 1 / data.rates.CAD,
+                    AUD: 1 / data.rates.AUD,
+                    CHF: 1 / data.rates.CHF,
+                    SGD: 1 / data.rates.SGD,
+                    HKD: 1 / data.rates.HKD,
+                    THB: 1 / data.rates.THB,
+                    MYR: 1 / data.rates.MYR,
+                    PHP: 1 / data.rates.PHP,
+                    VND: 1 / data.rates.VND,
+                    IDR: 1 / data.rates.IDR,
+                    RUB: 1 / data.rates.RUB,
+                    ZAR: 1 / data.rates.ZAR,
+                    MXN: 1 / data.rates.MXN,
+                    CLP: 1 / data.rates.CLP,
+                    COP: 1 / data.rates.COP,
+                    PEN: 1 / data.rates.PEN,
+                    ARS: 1 / data.rates.ARS,
+                    TRY: 1 / data.rates.TRY,
+                    BRL: 1 / data.rates.BRL,
+                    INR: 1 / data.rates.INR
+                };
+
+                // 更新顯示
+                updateRateDisplay('USD', rates.USD);
+                updateRateDisplay('TWD', 1); // 台幣對台幣匯率為1
+                updateRateDisplay('EUR', rates.EUR);
+                updateRateDisplay('GBP', rates.GBP);
+                updateRateDisplay('JPY', rates.JPY);
+                updateRateDisplay('CNY', rates.CNY);
+                updateRateDisplay('KRW', rates.KRW);
+                updateRateDisplay('CAD', rates.CAD);
+                updateRateDisplay('AUD', rates.AUD);
+                updateRateDisplay('CHF', rates.CHF);
+                updateRateDisplay('SGD', rates.SGD);
+                updateRateDisplay('HKD', rates.HKD);
+                updateRateDisplay('THB', rates.THB);
+                updateRateDisplay('MYR', rates.MYR);
+                updateRateDisplay('PHP', rates.PHP);
+                updateRateDisplay('VND', rates.VND);
+                updateRateDisplay('IDR', rates.IDR);
+                updateRateDisplay('RUB', rates.RUB);
+                updateRateDisplay('ZAR', rates.ZAR);
+                updateRateDisplay('MXN', rates.MXN);
+                updateRateDisplay('CLP', rates.CLP);
+                updateRateDisplay('COP', rates.COP);
+                updateRateDisplay('PEN', rates.PEN);
+                updateRateDisplay('ARS', rates.ARS);
+                updateRateDisplay('TRY', rates.TRY);
+                updateRateDisplay('BRL', rates.BRL);
+                updateRateDisplay('INR', rates.INR);
+
+                // 更新狀態
+                updateStatus('online', '已連接最新匯率');
+                document.getElementById('last-update').textContent = new Date().toLocaleString('zh-TW');
+
+            } catch (error) {
+                console.error('獲取匯率失敗:', error);
+                updateStatus('offline', '無法連接最新匯率');
+                showError('無法獲取最新匯率，使用預設匯率');
+                
+                // 使用預設匯率
+                rates = {
+                    TWD: 1,
+                    USD: 31.25,
+                    EUR: 34.50,
+                    GBP: 40.20,
+                    JPY: 0.21,
+                    CNY: 4.35,
+                    KRW: 0.024,
+                    CAD: 23.50,
+                    AUD: 20.80,
+                    CHF: 35.20,
+                    SGD: 23.10,
+                    HKD: 4.00,
+                    THB: 0.88,
+                    MYR: 6.70,
+                    PHP: 0.56,
+                    VND: 0.0013,
+                    IDR: 0.0020,
+                    RUB: 0.34,
+                    ZAR: 1.70,
+                    MXN: 1.85,
+                    CLP: 0.035,
+                    COP: 0.008,
+                    PEN: 8.40,
+                    ARS: 0.035,
+                    TRY: 1.05,
+                    BRL: 6.50,
+                    INR: 0.38
+                };
+            } finally {
+                // 恢復按鈕狀態
+                refreshBtn.disabled = false;
+                refreshIcon.textContent = '🔄';
+                refreshText.textContent = '更新匯率';
+            }
+        }
+
+        // 轉換函數
+        function convert() {
+            const amount1 = parseFloat(document.getElementById('amount1').value) || 0;
+            const currency1 = document.getElementById('currency1').value;
+            const currency2 = document.getElementById('currency2').value;
+            
+            if (amount1 === 0) {
+                document.getElementById('amount2').value = '';
+                document.getElementById('result').classList.remove('show');
+                return;
+            }
+
+            // 先轉換為台幣，再轉換為目標貨幣
+            const twdAmount = amount1 * rates[currency1];
+            const result = twdAmount / rates[currency2];
+            
+            document.getElementById('amount2').value = result.toFixed(2);
+            
+            // 顯示結果
+            const resultElement = document.getElementById('result');
+            const resultValue = document.getElementById('result-value');
+            const resultLabel = document.getElementById('result-label');
+            
+            resultValue.textContent = `${symbols[currency2]}${result.toFixed(2)}`;
+            
+            // 使用翻譯系統顯示結果標籤
+            const currentLang = document.documentElement.lang || 'zh';
+            const t = translations[currentLang] || translations.zh;
+            
+            // 獲取當前語言的貨幣名稱
+            const currencyNames = getCurrencyNames(currentLang);
+            const name1 = currencyNames[currency1] || names[currency1];
+            const name2 = currencyNames[currency2] || names[currency2];
+            
+            resultLabel.textContent = `${amount1} ${name1} = ${result.toFixed(2)} ${name2}`;
+            resultElement.classList.add('show');
+        }
+
+        // 交換貨幣
+        function swapCurrencies() {
+            const currency1 = document.getElementById('currency1');
+            const currency2 = document.getElementById('currency2');
+            const amount1 = document.getElementById('amount1');
+            const amount2 = document.getElementById('amount2');
+            
+            // 交換貨幣選擇
+            const temp = currency1.value;
+            currency1.value = currency2.value;
+            currency2.value = temp;
+            
+            // 交換金額
+            const tempAmount = amount1.value;
+            amount1.value = amount2.value;
+            amount2.value = tempAmount;
+            
+            // 更新國旗顯示
+            updateFlag('currency1', 'flag1');
+            updateFlag('currency2', 'flag2');
+            
+            // 重新計算
+            convert();
+        }
+
+        // 輸入金額時自動轉換
+        document.getElementById('amount1').addEventListener('input', convert);
+
+        // 更新時間
+        function updateTime() {
+            const now = new Date();
+            const lang = document.documentElement.lang || currentLanguage || 'zh';
+            const t = translations[lang] || translations.zh;
+
+            // 手動組合 24 小時制
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            const hh = String(now.getHours()).padStart(2, '0');
+            const min = String(now.getMinutes()).padStart(2, '0');
+            const ss = String(now.getSeconds()).padStart(2, '0');
+
+            // 根據語言組合日期格式
+            let dateString;
+            if (lang === 'en') {
+                dateString = `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
+            } else if (lang === 'ja' || lang === 'ko' || lang === 'zh') {
+                dateString = `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
+            } else if (lang === 'fr' || lang === 'es') {
+                dateString = `${dd}/${mm}/${yyyy} ${hh}:${min}:${ss}`;
+            } else {
+                dateString = `${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}`;
+            }
+
+            const updateTimeLabel = document.querySelector('.update-time');
+            if (updateTimeLabel) {
+                updateTimeLabel.innerHTML = `${t.pageUpdateTime}: <span id="update-time">${dateString}</span>`;
+            }
+        }
+
+        // 點擊匯率卡片可以快速設定轉換
+        document.querySelectorAll('.rate-card').forEach((card) => {
+            card.addEventListener('click', function() {
+                const currency = this.dataset.currency;
+                
+                document.getElementById('currency1').value = 'TWD';
+                document.getElementById('currency2').value = currency;
+                document.getElementById('amount1').value = '1';
+                
+                convert();
+            });
+        });
+
+        // 初始化
+        createParticles();
+        updateTime();
+        setInterval(updateTime, 1000);
+        
+        // 頁面載入時獲取匯率
+        fetchLatestRates();
+        
+        // 每5分鐘自動更新匯率
+        setInterval(fetchLatestRates, 5 * 60 * 1000);
+
+        // 測試搜尋功能
+        console.log('搜尋功能測試:');
+        console.log('可搜尋的貨幣:', Object.keys(symbols));
+        console.log('國家關鍵字:', countryKeywords);
+
+        // 搜尋功能
+        function searchCurrency() {
+            const searchInput = document.getElementById('currency-search');
+            const searchResults = document.getElementById('search-results');
+            const query = searchInput.value.trim().toLowerCase();
+            
+            console.log('搜尋查詢:', query); // 調試信息
+            
+            if (query === '') {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            const results = [];
+            
+            // 搜尋所有貨幣
+            Object.keys(symbols).forEach(currency => {
+                const symbol = symbols[currency].toLowerCase();
+                const name = names[currency].toLowerCase();
+                const code = currency.toLowerCase();
+                const keywords = countryKeywords[currency] || [];
+                
+                // 檢查是否匹配
+                let isMatch = symbol.includes(query) || name.includes(query) || code.includes(query);
+                
+                // 檢查國家關鍵字
+                if (!isMatch) {
+                    isMatch = keywords.some(keyword => keyword.toLowerCase().includes(query));
+                }
+                
+                if (isMatch) {
+                    results.push({
+                        currency: currency,
+                        symbol: symbols[currency],
+                        name: names[currency],
+                        code: currency,
+                        keywords: keywords.join(', ')
+                    });
+                }
+            });
+
+            console.log('搜尋結果:', results); // 調試信息
+
+            // 顯示結果
+            displaySearchResults(results);
+        }
+
+        function displaySearchResults(results) {
+            const searchResults = document.getElementById('search-results');
+            
+            if (results.length === 0) {
+                searchResults.innerHTML = '<div class="no-results">找不到相關貨幣</div>';
+                searchResults.style.display = 'block';
+                return;
+            }
+
+            let html = '';
+            results.forEach(result => {
+                html += `
+                    <div class="search-result-item" onclick="selectCurrency('${result.currency}')">
+                        <div class="search-result-symbol">${result.symbol}</div>
+                        <div class="search-result-info">
+                            <div class="search-result-name">${result.name}</div>
+                            <div class="search-result-code">${result.code} • ${result.keywords}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            searchResults.innerHTML = html;
+            searchResults.style.display = 'block';
+        }
+
+        function selectCurrency(currency) {
+            console.log('選擇貨幣:', currency); // 調試信息
+            
+            // 隱藏搜尋結果
+            document.getElementById('search-results').style.display = 'none';
+            document.getElementById('currency-search').value = '';
+            
+            // 找到對應的匯率卡片
+            const card = document.querySelector(`[data-currency="${currency}"]`);
+            if (card) {
+                console.log('找到卡片:', card); // 調試信息
+                
+                // 先移除所有卡片的高亮效果
+                document.querySelectorAll('.rate-card').forEach(c => {
+                    c.style.border = '';
+                    c.style.transform = '';
+                    c.style.boxShadow = '';
+                    c.style.transition = '';
+                    c.style.animation = '';
+                });
+                
+                // 滾動到該位置
+                card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                
+                // 添加紅色邊框高亮效果
+                setTimeout(() => {
+                    card.style.border = '3px solid #dc3545';
+                    card.style.transform = 'scale(1.05)';
+                    card.style.boxShadow = '0 20px 40px rgba(220, 53, 69, 0.4)';
+                    card.style.transition = 'all 0.3s ease';
+                    
+                    // 添加脈衝動畫
+                    card.style.animation = 'pulseHighlight 2s ease-in-out';
+                }, 500);
+                
+                // 3秒後移除高亮效果
+                setTimeout(() => {
+                    card.style.border = '';
+                    card.style.transform = '';
+                    card.style.boxShadow = '';
+                    card.style.animation = '';
+                }, 3500);
+            } else {
+                console.log('找不到對應的卡片'); // 調試信息
+            }
+        }
+
+        // 搜尋輸入事件
+        document.getElementById('currency-search').addEventListener('input', function() {
+            console.log('輸入事件觸發:', this.value); // 調試信息
+            if (this.value.trim() === '') {
+                document.getElementById('search-results').style.display = 'none';
+            } else {
+                searchCurrency();
+            }
+        });
+
+        // 點擊外部隱藏搜尋結果
+        document.addEventListener('click', function(e) {
+            const searchContainer = document.querySelector('.search-container');
+            const searchResults = document.getElementById('search-results');
+            
+            if (!searchContainer.contains(e.target)) {
+                searchResults.style.display = 'none';
+            }
+        });
+
+        // 滾動到轉換器函數
+        function scrollToConverter() {
+            const converterSection = document.querySelector('.converter-section');
+            if (converterSection) {
+                converterSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // 滾動到搜尋區域
+        function scrollToSearch() {
+            const searchSection = document.querySelector('.rates-display');
+            if (searchSection) {
+                searchSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function updateFlag(selectId, flagId) {
+            const select = document.getElementById(selectId);
+            const flag = document.getElementById(flagId);
+            if (select && flag) {
+                flag.textContent = currencyFlags[select.value] || '';
+            }
+        }
+
+        // 轉換貨幣
+        async function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            const resultDiv = document.getElementById('result');
+
+            if (!amount || amount <= 0) {
+                resultDiv.innerHTML = `<p class="error">${translations[currentLanguage]?.enterAmount || 'Please enter an amount'}</p>`;
+                return;
+            }
+
+            if (!fromCurrency || !toCurrency) {
+                resultDiv.innerHTML = `<p class="error">${translations[currentLanguage]?.selectCurrency || 'Please select currencies'}</p>`;
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://api.exchangerate-api.com/v4/latest/${fromCurrency}`);
+                const data = await response.json();
+                
+                if (data.rates && data.rates[toCurrency]) {
+                    const rate = data.rates[toCurrency];
+                    const convertedAmount = amount * rate;
+                    
+                    // 使用本地化格式
+                    const formattedAmount = formatNumber(amount);
+                    const formattedResult = formatNumber(convertedAmount);
+                    
+                    resultDiv.innerHTML = `
+                        <div class="conversion-result">
+                            <div class="amount-display">
+                                <span class="original">${formattedAmount} ${fromCurrency}</span>
+                                <span class="arrow">→</span>
+                                <span class="converted">${formattedResult} ${toCurrency}</span>
+                            </div>
+                            <div class="rate-info">
+                                <p>1 ${fromCurrency} = ${formatNumber(rate)} ${toCurrency}</p>
+                                <p>1 ${toCurrency} = ${formatNumber(1/rate)} ${fromCurrency}</p>
+                            </div>
+                            <div class="update-time">
+                                <small>${translations[currentLanguage]?.lastUpdate || 'Last Update'}: ${formatDateTime(new Date())}</small>
+                            </div>
+                        </div>
+                    `;
+                    
+                    // 更新API狀態
+                    updateApiStatus(true);
+                    updateLastUpdate();
+                } else {
+                    resultDiv.innerHTML = `<p class="error">${translations[currentLanguage]?.error || 'Error occurred during conversion'}</p>`;
+                    updateApiStatus(false);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">${translations[currentLanguage]?.error || 'Error occurred during conversion'}</p>`;
+                updateApiStatus(false);
+            }
+        }
+
+        // 多語言貨幣名稱
+        const currencyNamesByLang = {
+            en: {
+                TWD: 'Taiwan Dollar',
+                USD: 'US Dollar',
+                EUR: 'Euro',
+                GBP: 'British Pound',
+                JPY: 'Japanese Yen',
+                CNY: 'Chinese Yuan',
+                KRW: 'Korean Won',
+                CAD: 'Canadian Dollar',
+                AUD: 'Australian Dollar',
+                CHF: 'Swiss Franc',
+                SGD: 'Singapore Dollar',
+                HKD: 'Hong Kong Dollar',
+                THB: 'Thai Baht',
+                MYR: 'Malaysian Ringgit',
+                PHP: 'Philippine Peso',
+                VND: 'Vietnamese Dong',
+                IDR: 'Indonesian Rupiah',
+                RUB: 'Russian Ruble',
+                ZAR: 'South African Rand',
+                MXN: 'Mexican Peso',
+                CLP: 'Chilean Peso',
+                COP: 'Colombian Peso',
+                PEN: 'Peruvian Sol',
+                ARS: 'Argentine Peso',
+                TRY: 'Turkish Lira',
+                BRL: 'Brazilian Real',
+                INR: 'Indian Rupee'
+            },
+            zh: {
+                TWD: '台幣',
+                USD: '美元',
+                EUR: '歐元',
+                GBP: '英鎊',
+                JPY: '日圓',
+                CNY: '人民幣',
+                KRW: '韓元',
+                CAD: '加拿大元',
+                AUD: '澳洲元',
+                CHF: '瑞士法郎',
+                SGD: '新加坡元',
+                HKD: '港幣',
+                THB: '泰銖',
+                MYR: '馬來西亞令吉',
+                PHP: '菲律賓披索',
+                VND: '越南盾',
+                IDR: '印尼盾',
+                RUB: '俄羅斯盧布',
+                ZAR: '南非蘭特',
+                MXN: '墨西哥披索',
+                CLP: '智利披索',
+                COP: '哥倫比亞披索',
+                PEN: '秘魯索爾',
+                ARS: '阿根廷披索',
+                TRY: '土耳其里拉',
+                BRL: '巴西雷亞爾',
+                INR: '印度盧比'
+            },
+            ja: {
+                TWD: '台湾ドル',
+                USD: '米ドル',
+                EUR: 'ユーロ',
+                GBP: 'ポンド',
+                JPY: '円',
+                CNY: '人民元',
+                KRW: 'ウォン',
+                CAD: 'カナダドル',
+                AUD: 'オーストラリアドル',
+                CHF: 'スイスフラン',
+                SGD: 'シンガポールドル',
+                HKD: '香港ドル',
+                THB: 'バーツ',
+                MYR: 'マレーシアリンギット',
+                PHP: 'フィリピンペソ',
+                VND: 'ベトナムドン',
+                IDR: 'インドネシアルピア',
+                RUB: 'ロシアルーブル',
+                ZAR: '南アフリカランド',
+                MXN: 'メキシコペソ',
+                CLP: 'チリペソ',
+                COP: 'コロンビアペソ',
+                PEN: 'ペルーソル',
+                ARS: 'アルゼンチンペソ',
+                TRY: 'リラ',
+                BRL: 'レアル',
+                INR: 'ルピー'
+            },
+            ko: {
+                TWD: '대만 달러',
+                USD: '미국 달러',
+                EUR: '유로',
+                GBP: '파운드',
+                JPY: '엔',
+                CNY: '위안',
+                KRW: '원',
+                CAD: '캐나다 달러',
+                AUD: '호주 달러',
+                CHF: '스위스 프랑',
+                SGD: '싱가포르 달러',
+                HKD: '홍콩 달러',
+                THB: '태국 바트',
+                MYR: '말레이시아 링깃',
+                PHP: '필리핀 페소',
+                VND: '베트남 동',
+                IDR: '인도네시아 루피아',
+                RUB: '러시아 루블',
+                ZAR: '남아프리카 랜드',
+                MXN: '멕시코 페소',
+                CLP: '칠레 페소',
+                COP: '콜롬비아 페소',
+                PEN: '페루 솔',
+                ARS: '아르헨티나 페소',
+                TRY: '터키 리라',
+                BRL: '브라질 헤알',
+                INR: '인도 루피'
+            },
+            es: {
+                TWD: 'Dólar de Taiwán',
+                USD: 'Dólar Estadounidense',
+                EUR: 'Euro',
+                GBP: 'Libra Esterlina',
+                JPY: 'Yen Japonés',
+                CNY: 'Yuan Chino',
+                KRW: 'Won Surcoreano',
+                CAD: 'Dólar Canadiense',
+                AUD: 'Dólar Australiano',
+                CHF: 'Franco Suizo',
+                SGD: 'Dólar de Singapur',
+                HKD: 'Dólar de Hong Kong',
+                THB: 'Baht Tailandés',
+                MYR: 'Ringgit Malayo',
+                PHP: 'Peso Filipino',
+                VND: 'Dong Vietnamita',
+                IDR: 'Rupia Indonesia',
+                RUB: 'Rublo Ruso',
+                ZAR: 'Rand Sudafricano',
+                MXN: 'Peso Mexicano',
+                CLP: 'Peso Chileno',
+                COP: 'Peso Colombiano',
+                PEN: 'Sol Peruano',
+                ARS: 'Peso Argentino',
+                TRY: 'Lira Turca',
+                BRL: 'Real Brasileño',
+                INR: 'Rupia India'
+            },
+            fr: {
+                TWD: 'Dollar Taïwanais',
+                USD: 'Dollar Américain',
+                EUR: 'Euro',
+                GBP: 'Livre Sterling',
+                JPY: 'Yen Japonais',
+                CNY: 'Yuan Chinois',
+                KRW: 'Won Sud-Coréen',
+                CAD: 'Dollar Canadien',
+                AUD: 'Dollar Australien',
+                CHF: 'Franc Suisse',
+                SGD: 'Dollar de Singapour',
+                HKD: 'Dollar de Hong Kong',
+                THB: 'Baht Thaïlandais',
+                MYR: 'Ringgit Malaisien',
+                PHP: 'Peso Philippin',
+                VND: 'Dong Vietnamien',
+                IDR: 'Roupie Indonésienne',
+                RUB: 'Rouble Russe',
+                ZAR: 'Rand Sud-Africain',
+                MXN: 'Peso Mexicain',
+                CLP: 'Peso Chilien',
+                COP: 'Peso Colombien',
+                PEN: 'Sol Péruvien',
+                ARS: 'Peso Argentin',
+                TRY: 'Livre Turque',
+                BRL: 'Real Brésilien',
+                INR: 'Roupie Indienne',
+                copyResultBtn: "Copier le résultat",
+                copied: "Copié"
+            }
+        };
+
+        // 獲取指定語言的貨幣名稱
+        function getCurrencyNames(lang) {
+            return currencyNamesByLang[lang] || currencyNamesByLang.zh;
+        }
+
+        function setQuickCurrency(code) {
+            // 預設切換來源貨幣
+            document.getElementById('currency1').value = code;
+            updateFlag('currency1', 'flag1');
+            convert();
+        }
+
+        // 顯示複製按鈕
+        function showCopyBtn() {
+            document.getElementById('copy-result-btn').style.display = 'inline-block';
+        }
+        // 隱藏複製按鈕
+        function hideCopyBtn() {
+            document.getElementById('copy-result-btn').style.display = 'none';
+        }
+        // 複製結果
+        document.getElementById('copy-result-btn').onclick = function() {
+            const value = document.getElementById('result-value').textContent;
+            const label = document.getElementById('result-label').textContent;
+            navigator.clipboard.writeText(`${label}: ${value}`);
+            this.textContent = t.copied || '已複製';
+            setTimeout(()=>{ this.textContent = t.copyResultBtn || '複製結果'; }, 1500);
+        };
+        // 轉換時自動顯示/隱藏複製按鈕
+        const origConvert = convert;
+        convert = function() {
+            origConvert();
+            const result = document.getElementById('result');
+            if(result.classList.contains('show')) showCopyBtn();
+            else hideCopyBtn();
+        }
+
+        // 新增selectLanguage函數
+        function selectLanguage(lang) {
+            changeLanguage(lang);
+            document.querySelector('.language-selector').classList.remove('show');
+        }
+
+        // 將語言選項的onclick改為selectLanguage('xx')
+        // 例如：<div class="language-option" onclick="selectLanguage('en')">...</div>
+        // ...
+
+        // 動態渲染常用貨幣按鈕
+        function renderQuickCurrencyButtons(lang) {
+            const t = translations[lang] || translations.zh;
+            const quickList = t.quickCurrencies || ["TWD", "USD", "JPY", "KRW", "EUR"];
+            const quickCodes = t.quickCurrencyCodes || ["USD", "TWD", "JPY", "KRW", "EUR"];
+            const quickDiv = document.querySelector('.quick-currency-select');
+            if (!quickDiv) return;
+            let html = `<span>${t.commonCurrencies || '常用貨幣'}：</span>`;
+            quickList.forEach((name, idx) => {
+                html += `<button class="quick-btn" onclick="setQuickCurrency('${quickCodes[idx]}')">${name}</button>`;
+            });
+            quickDiv.innerHTML = html;
+        }
+
+        // 在changeLanguage裡呼叫
+        renderQuickCurrencyButtons(lang);
+
+        // 匯率通知訂閱功能
+        function updateNotificationTexts(lang) {
+            const t = translations[lang] || translations.zh;
+            
+            // 更新通知區域標題和描述
+            const notificationTitle = document.getElementById('notification-title');
+            if (notificationTitle) notificationTitle.textContent = t.rateNotification;
+            
+            const notificationDesc = document.getElementById('notification-desc');
+            if (notificationDesc) notificationDesc.textContent = t.subscribeDesc;
+            
+            // 更新 Email 訂閱區域
+            const emailInput = document.getElementById('email-input');
+            if (emailInput) emailInput.placeholder = t.emailPlaceholder;
+            
+            const currencySelectionLabel = document.getElementById('currency-selection-label');
+            if (currencySelectionLabel) currencySelectionLabel.textContent = t.selectCurrencies;
+            
+            const notificationTimeLabel = document.getElementById('notification-time-label');
+            if (notificationTimeLabel) notificationTimeLabel.textContent = t.notificationTime;
+            
+            const subscribeBtn = document.getElementById('email-subscribe-btn');
+            if (subscribeBtn) subscribeBtn.textContent = t.subscribeBtn;
+            
+            const unsubscribeBtn = document.getElementById('email-unsubscribe-btn');
+            if (unsubscribeBtn) unsubscribeBtn.textContent = t.unsubscribeBtn;
+            
+            // 更新時間選項
+            const timeSelect = document.getElementById('notification-time-select');
+            if (timeSelect) {
+                const options = timeSelect.options;
+                options[0].text = `${t.dailyAt} 09:00`;
+                options[1].text = `${t.dailyAt} 12:00`;
+                options[2].text = `${t.dailyAt} 18:00`;
+                options[3].text = `${t.dailyAt} 21:00`;
+            }
+        }
+
+        // Email 訂閱功能
+       function subscribeEmail() {
+    const email = document.getElementById('email-input').value.trim();
+    const selectedCurrencies = getSelectedCurrencies();
+    const notificationTime = document.getElementById('notification-time-select').value;
+
+    if (!email) {
+        showSubscriptionStatus('error', translations[currentLanguage]?.emailRequired || 'Email is required');
+        return;
+    }
+
+    if (selectedCurrencies.length === 0) {
+        showSubscriptionStatus('error', translations[currentLanguage]?.currencyRequired || 'Please select at least one currency');
+        return;
+    }
+
+    // 整合 Google Forms 收集訂閱資料
+    const formData = new FormData();
+    formData.append('entry.1916893204', email); // Email 地址
+    formData.append('entry.1561399061', selectedCurrencies.join(', ')); // 選擇的貨幣
+    formData.append('entry.504908005', notificationTime); // 通知時間
+    formData.append('entry.1245695067', currentLanguage); // 語言偏好
+    formData.append('entry.941096127', new Date().toISOString()); // 訂閱時間
+
+    fetch('https://docs.google.com/forms/d/e/1FAIpQLSfaEgnSQhW5vWHldt7jOOiLVFGZInWdSxktX-vFss6xguM5zQ/formResponse', {
+        method: 'POST',
+        body: formData,
+        mode: 'no-cors'
+    }).then(() => {
+        showSubscriptionStatus('success', translations[currentLanguage]?.subscribeSuccess || 'Successfully subscribed!');
+        document.getElementById('email-subscribe-btn').style.display = 'none';
+        document.getElementById('email-unsubscribe-btn').style.display = 'inline-block';
+        localStorage.setItem('emailSubscription', JSON.stringify({
+            email: email,
+            currencies: selectedCurrencies,
+            notificationTime: notificationTime,
+            timestamp: new Date().toISOString(),
+            language: currentLanguage
+        }));
+    }).catch(() => {
+        showSubscriptionStatus('error', translations[currentLanguage]?.subscribeError || 'Subscription failed. Please try again.');
+    });
+}
+
+        // 取消 Email 訂閱
+        function unsubscribeEmail() {
+            const email = document.getElementById('email-input').value.trim();
+            
+            if (!email) {
+                showSubscriptionStatus('error', translations[currentLanguage]?.emailRequired || 'Email is required');
+                return;
+            }
+            
+            // 模擬取消訂閱成功
+            console.log('Unsubscribing email:', email);
+            showSubscriptionStatus('success', translations[currentLanguage]?.unsubscribeSuccess || 'Successfully unsubscribed!');
+            
+            // 切換按鈕狀態
+            document.getElementById('email-subscribe-btn').style.display = 'inline-block';
+            document.getElementById('email-unsubscribe-btn').style.display = 'none';
+            
+            // 清除 localStorage
+            localStorage.removeItem('emailSubscription');
+        }
+
+        // LINE Notify 連接
+        function connectLineNotify() {
+            // LINE Notify 授權流程
+            const clientId = 'YOUR_LINE_NOTIFY_CLIENT_ID'; // 需要申請 LINE Notify 應用
+            const redirectUri = encodeURIComponent(window.location.origin + '/line-notify-callback');
+            const scope = 'notify';
+            const state = Math.random().toString(36).substring(7);
+            
+            const authUrl = `https://notify-bot.line.me/oauth/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=${state}`;
+            
+            // 在新視窗開啟授權頁面
+            window.open(authUrl, 'line-notify-auth', 'width=500,height=600');
+            
+            showSubscriptionStatus('success', '請在新視窗中完成 LINE Notify 授權');
+        }
+
+        // 升級至進階版
+        function upgradeToPremium() {
+            // 這裡可以整合付費系統（如 Stripe、PayPal 等）
+            showSubscriptionStatus('success', '即將推出進階功能，敬請期待！');
+        }
+
+        // 獲取選中的貨幣
+        function getSelectedCurrencies() {
+            const checkboxes = document.querySelectorAll('.currency-checkbox input[type="checkbox"]:checked');
+            return Array.from(checkboxes).map(cb => cb.value);
+        }
+
+        // 顯示訂閱狀態
+        function showSubscriptionStatus(type, message) {
+            const statusDiv = document.getElementById('subscription-status');
+            const messageDiv = document.getElementById('status-message');
+            
+            if (statusDiv && messageDiv) {
+                statusDiv.className = `subscription-status ${type}`;
+                messageDiv.textContent = message;
+                statusDiv.style.display = 'block';
+                
+                // 3秒後自動隱藏
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 3000);
+            }
+        }
+
+        // 檢查現有訂閱狀態
+        function checkExistingSubscription() {
+            const subscription = localStorage.getItem('emailSubscription');
+            if (subscription) {
+                const data = JSON.parse(subscription);
+                document.getElementById('email-input').value = data.email;
+                document.getElementById('notification-time-select').value = data.notificationTime;
+                
+                // 恢復選中的貨幣
+                data.currencies.forEach(currency => {
+                    const checkbox = document.querySelector(`input[value="${currency}"]`);
+                    if (checkbox) checkbox.checked = true;
+                });
+                
+                // 切換按鈕狀態
+                document.getElementById('email-subscribe-btn').style.display = 'none';
+                document.getElementById('email-unsubscribe-btn').style.display = 'inline-block';
+            }
+        }
+
+        // 頁面載入時檢查訂閱狀態
+        document.addEventListener('DOMContentLoaded', function() {
+            checkExistingSubscription();
+        });
+    </script>
+</body>
+</html> 
