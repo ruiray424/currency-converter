@@ -1403,16 +1403,18 @@
 
     <!-- 移除舊語言選擇器區塊及相關CSS/JS -->
     <!-- 新語言選擇器（右上角） -->
-    <div style="position:fixed;top:18px;right:18px;z-index:1001;">
-        <select id="lang-select" style="padding:8px 18px;border-radius:8px;font-size:1em;">
-            <option value="zh">繁體中文</option>
-            <option value="en">English</option>
-            <option value="ja">日本語</option>
-            <option value="ko">한국어</option>
-            <option value="es">Español</option>
-            <option value="fr">Français</option>
-        </select>
-    </div>
+    // ... existing code ...
+<div style="position:fixed;top:60px;right:18px;z-index:1001;">
+    <select id="lang-select" style="padding:8px 18px;border-radius:8px;font-size:1em;">
+        <option value="zh">繁體中文</option>
+        <option value="en">English</option>
+        <option value="ja">日本語</option>
+        <option value="ko">한국어</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+    </select>
+</div>
+// ... existing code ...
 
     <script>
     // 新增<select>切換事件
